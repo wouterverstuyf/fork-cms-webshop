@@ -32,6 +32,12 @@
 !/src/Backend/Modules/ModuleMaker/
 !/src/Backend/Modules/ModuleMaker/*
 
+!/src/Frontend/Modules/Brands/
+!/src/Frontend/Modules/Brands/*
+
+!/src/Backend/Modules/Brands/
+!/src/Backend/Modules/Brands/*
+
 !/src/Frontend/Modules/Shop/
 !/src/Frontend/Modules/Shop/*
 
