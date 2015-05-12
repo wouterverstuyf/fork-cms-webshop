@@ -50,4 +50,10 @@
 !/src/Backend/Modules/Products/
 !/src/Backend/Modules/Products/*
 
+!/laravel/
+/laravel/*
+
+!/laravel/database
+/laravel/database/*
+
 !/.gitignore
