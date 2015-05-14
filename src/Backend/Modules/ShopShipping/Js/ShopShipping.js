@@ -15,6 +15,27 @@ jsBackend.shop_shipping =
     // constructor
     init: function()
     {
+    	// disabled fields
+		$('.toggleDisable').change(function(e) 
+		{
+			var reverse = false;
+			if($(e.target).hasClass('reverseToggle')) reverse = true;
+
+			if(
+				(reverse && !$(e.target).is(':checked')) ||
+				(!reverse && $(e.target).is(':checked'))
+			){
+				$(e.target).closest('.box').find('input.inputText').each(function(i, el){
+					if(!$(el).hasClass('alwaysDisabled')) $(el).removeClass('disabled').removeAttr('disabled')
+				});
+			}
+			else
+			{
+				$(e.target).closest('.box').find('input.inputText').each(function(i, el){
+					if(!$(el).hasClass('alwaysDisabled')) $(el).addClass('disabled').attr('disabled', 'disabled');
+				});
+			}
+		}).trigger('change');
     }
 }
 

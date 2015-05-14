@@ -15,16 +15,21 @@ class Helper
 {
 	public static function calculatePriceInclVat($priceExcl, $vatPct)
     {
-    	return ($priceExcl * ((int) $vatPct + 1));
+    	return self::roundPrice(((float) $priceExcl * (((float) $vatPct + 100)) / 100));
     }
 
     public static function calculatePriceExclVat($priceIncl, $vatPct)
     {
-        return (($priceIncl / (100 + (int) $vatPct)) * 100);
+        return self::roundPrice((((float) $priceIncl / (100 + (float) $vatPct)) * 100));
     }
 
     public static function calculatePriceVat($priceExcl, $vatPct)
     {
-        return ($priceExcl * ((int) $vatPct + 1)) - $priceExcl;
+        return self::roundPrice(self::calculatePriceInclVat($priceExcl, $vatPct) - (float) $priceExcl);
+    }
+
+    public static function roundPrice($price , $precision = 4)
+    {
+        return number_format($price , $precision , '.', '');
     }
 }

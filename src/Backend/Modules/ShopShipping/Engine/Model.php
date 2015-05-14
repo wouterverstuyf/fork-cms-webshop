@@ -43,6 +43,17 @@ class Model
         );
     }
 
+     public static function existsByCountry($country)
+    {
+        return (bool) BackendModel::get('database')->getVar(
+            'SELECT 1
+             FROM shop_shipping AS i
+             WHERE i.country = ?
+             LIMIT 1',
+            array((string) $country)
+        );
+    }
+
     /**
      * Fetches a certain item
      *

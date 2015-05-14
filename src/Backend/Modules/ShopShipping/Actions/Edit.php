@@ -8,6 +8,9 @@ use Backend\Core\Engine\Language;
 use Backend\Core\Engine\Model;
 use Backend\Modules\ShopShipping\Engine\Model as BackendShopShippingModel;
 
+use Frontend\Modules\ShopBase\Engine\Helper as FrontendShopShippingHelper;
+use Symfony\Component\Intl\Intl as Intl;
+
 /**
  * This is the edit-action, it will display a form with the item data to edit
  *
@@ -53,22 +56,28 @@ class Edit extends ActionEdit
         // create form
         $this->frm = new Form('edit');
 
-        $this->frm->addText('free_from' ,$this->record['free_from'], null, 'inputText title', 'inputTextError title');
+        $price = $this->record['price_excl'];
+        if($this->record['price_is_incl_vat'] == 'Y') $price = $this->record['price_incl'];
 
-        // build array with options for the destination Dropdown
-        $DropdownDestinationValues = array(Language::lbl('A'));
-        $this->frm->addDropdown('destination', $DropdownDestinationValues, $this->record['destination'])->setDefaultElement('');
-        $this->frm->addText('duration_estimate', $this->record['duration_estimate']);
-        $this->frm->addText('price_incl', $this->record['price_incl']);
-        $this->frm->addText('price_excl', $this->record['price_excl']);
-        $this->frm->addText('price_vat', $this->record['price_vat']);
-        $this->frm->addText('vat_pct', $this->record['vat_pct']);
+        $this->frm->addDropdown('country', Intl::getRegionBundle()->getCountryNames(Language::getInterfaceLanguage()), $this->record['country']);
+        
+        $this->frm->addCheckbox('has_duration', ($this->record['duration'] != NULL))->setAttribute('class', 'toggleDisable');
+        $this->frm->addText('duration', $this->record['duration']);
+        $this->frm->addText('price', (float) $price);
+        $this->frm->addText('vat_pct', (float) $this->record['vat_pct']);
         $this->frm->addCheckbox('add_vat_consumer', $this->record['add_vat_consumer'] == 'Y');
         $this->frm->addCheckbox('add_vat_company', $this->record['add_vat_company'] == 'Y');
+        $this->frm->addText('free_from_price', (float) $this->record['free_from_price']);
+        $this->frm->addCheckbox('has_free_from', ($this->record['free_from_price'] != NULL))->setAttribute('class', 'toggleDisable');
 
-        // meta
-        $this->meta = new Meta($this->frm, $this->record['meta_id'], 'free_from', true);
-        $this->meta->setUrlCallBack('Backend\Modules\ShopShipping\Engine\Model', 'getUrl', array($this->record['id']));
+        // set hidden values
+        $rbtHiddenValues[] = array('label' => Language::lbl('NotAvailable', $this->URL->getModule()), 'value' => 'Y');
+        $rbtHiddenValues[] = array('label' => Language::lbl('Available'), 'value' => 'N');
+        $this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
+
+        $rbtPriceIsValues[] = array('label' => Language::lbl('IsInclVat', $this->URL->getModule()), 'value' => 'Y');
+        $rbtPriceIsValues[] = array('label' => Language::lbl('IsExclVat'), 'value' => 'N');
+        $this->frm->addRadiobutton('price_is', $rbtPriceIsValues, $this->record['price_is_incl_vat']);
 
     }
 
@@ -79,18 +88,7 @@ class Edit extends ActionEdit
     {
         parent::parse();
 
-        // get url
-        $url = Model::getURLForBlock($this->URL->getModule(), 'Detail');
-        $url404 = Model::getURL(404);
-
-        // parse additional variables
-        if ($url404 != $url) {
-            $this->tpl->assign('detailURL', SITE_URL . $url);
-        }
-        $this->record['url'] = $this->meta->getURL();
-
-
-        $this->tpl->assign('item', $this->record);
+        $this->tpl->assign('record', $this->record);
     }
 
     /**
@@ -104,26 +102,50 @@ class Edit extends ActionEdit
             // validation
             $fields = $this->frm->getFields();
 
-            $fields['free_from']->isFilled(Language::err('FieldIsRequired'));
+            $fields['country']->isFilled(Language::err('FieldIsRequired'));
 
-            // validate meta
-            $this->meta->validate();
+            if(BackendShopShippingModel::existsByCountry($fields['country']->getValue()) && $fields['country']->getValue() != $this->record['country']) {
+                $fields['country']->setError(Language::err('CountryExists'));
+            }
+
+            $fields['vat_pct']->isFloat(Language::err('InvalidInteger'));
+            $fields['price']->isFloat(Language::err('InvalidInteger'));
+
+            if($fields['has_duration']->isChecked()) $fields['duration']->isInteger(Language::err('InvalidInteger'));
+            if($fields['has_free_from']->isChecked()) $fields['free_from_price']->isInteger(Language::err('InvalidInteger'));
+
 
             if ($this->frm->isCorrect()) {
+               
                 $item['id'] = $this->id;
-                $item['language'] = Language::getWorkingLanguage();
+                $item['country'] = $fields['country']->getValue();
 
-                $item['destination'] = $fields['destination']->getValue();
-                $item['free_from'] = $fields['free_from']->getValue();
-                $item['duration_estimate'] = $fields['duration_estimate']->getValue();
-                $item['price_incl'] = $fields['price_incl']->getValue();
-                $item['price_excl'] = $fields['price_excl']->getValue();
-                $item['price_vat'] = $fields['price_vat']->getValue();
-                $item['vat_pct'] = $fields['vat_pct']->getValue();
                 $item['add_vat_consumer'] = $fields['add_vat_consumer']->getChecked() ? 'Y' : 'N';
                 $item['add_vat_company'] = $fields['add_vat_company']->getChecked() ? 'Y' : 'N';
 
-                $item['meta_id'] = $this->meta->save();
+
+                $item['free_from_price'] = NULL;
+                if($fields['has_free_from']->isChecked()) $item['free_from_price'] = $fields['free_from_price']->getValue();
+                
+                $item['duration'] = NULL;
+                if($fields['has_duration']->isChecked()) $item['duration'] = $fields['duration']->getValue();
+                
+                $item['vat_pct'] = $fields['vat_pct']->getValue();
+
+                $item['hidden'] = $fields['hidden']->getValue();
+
+                $item['price_is_incl_vat'] = $fields['price_is']->getValue();
+
+                // is incl vat
+                if($fields['price_is']->getValue() == 'Y') {
+                    $item['price_incl'] = $fields['price']->getValue();
+                    $item['price_excl'] = FrontendShopShippingHelper::calculatePriceExclVat($item['price_incl'], $item['vat_pct']);
+                    $item['price_vat'] = FrontendShopShippingHelper::calculatePriceVat($item['price_excl'], $item['vat_pct']);
+                } else {
+                     $item['price_excl'] = $fields['price']->getValue();
+                     $item['price_incl'] = FrontendShopShippingHelper::calculatePriceInclVat($item['price_excl'], $item['vat_pct']);
+                     $item['price_vat'] = FrontendShopShippingHelper::calculatePriceVat($item['price_excl'], $item['vat_pct']);
+                }
 
                 BackendShopShippingModel::update($item);
                 $item['id'] = $this->id;
@@ -132,7 +154,7 @@ class Edit extends ActionEdit
                     $this->getModule(), 'after_edit', $item
                 );
                 $this->redirect(
-                    Model::createURLForAction('Index') . '&report=edited&highlight=row-' . $item['id']
+                    Model::createURLForAction('Edit') . '&report=edited&id=' . $item['id']
                 );
             }
         }

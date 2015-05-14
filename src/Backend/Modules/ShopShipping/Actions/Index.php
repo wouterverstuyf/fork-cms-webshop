@@ -46,7 +46,7 @@ class Index extends ActionIndex
                 Language::lbl('Edit')
             );
             $this->dataGrid->setColumnURL(
-                'free_from', Model::createURLForAction('Edit') . '&amp;id=[id]'
+                'country', Model::createURLForAction('Edit') . '&amp;id=[id]'
             );
         }
     }
