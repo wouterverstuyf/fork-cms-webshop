@@ -44,27 +44,27 @@
 !/src/Backend/Modules/Shop/
 !/src/Backend/Modules/Shop/*
 
-!/src/Backend/Frontend/ShopProducts/
-!/src/Backend/Frontend/ShopProducts/*
+!/src/Frontend/Modules/ShopProducts/
+!/src/Frontend/Modules/ShopProducts/*
 
 !/src/Backend/Modules/ShopProducts/
 !/src/Backend/Modules/ShopProducts/*
 
-!/src/Backend/Frontend/ShopCategories/
-!/src/Backend/Frontend/ShopCategories/*
+!/src/Frontend/Modules/ShopCategories/
+!/src/Frontend/Modules/ShopCategories/*
 
 !/src/Backend/Modules/ShopCategories/
 !/src/Backend/Modules/ShopCategories/*
 
-!/src/Backend/Frontend/ShopShipping/
-!/src/Backend/Frontend/ShopShipping/*
+!/src/Frontend/Modules/ShopShipping/
+!/src/Frontend/Modules/ShopShipping/*
 
 !/src/Backend/Modules/ShopShipping/
 !/src/Backend/Modules/ShopShipping/*
 
 
-!/src/Backend/Frontend/ShopBase/
-!/src/Backend/Frontend/ShopBase/*
+!/src/Frontend/Modules/ShopBase/
+!/src/Frontend/Modules/ShopBase/*
 
 !/src/Backend/Modules/ShopBase/
 !/src/Backend/Modules/ShopBase/*
