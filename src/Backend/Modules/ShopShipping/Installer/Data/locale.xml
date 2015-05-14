@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+	<Backend>
+		<ShopShipping>
+			<item type="label" name="AddShopShipping">
+				<translation language="nl"><![CDATA[shipping toevoegen]]></translation>
+				<translation language="en"><![CDATA[add shipping]]></translation>
+			</item>
+			<item type="label" name="ShopShippingDetail">
+				<translation language="nl"><![CDATA[shipping detail]]></translation>
+				<translation language="en"><![CDATA[shipping detail]]></translation>
+			</item>
+		</ShopShipping>
+		<Core>
+			<item type="label" name="ShopShipping">
+				<translation language="nl"><![CDATA[shipping]]></translation>
+				<translation language="en"><![CDATA[shipping]]></translation>
+			</item>
+			
+		</Core>
+	</Backend>
+	<Frontend>
+		<core>
+		</core>
+	</Frontend>
+</locale>

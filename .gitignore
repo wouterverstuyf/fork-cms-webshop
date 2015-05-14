@@ -56,6 +56,12 @@
 !/src/Backend/Modules/ShopCategories/
 !/src/Backend/Modules/ShopCategories/*
 
+!/src/Backend/Frontend/ShopShipping/
+!/src/Backend/Frontend/ShopShipping/*
+
+!/src/Backend/Modules/ShopShipping/
+!/src/Backend/Modules/ShopShipping/*
+
 !/laravel/
 /laravel/*
 

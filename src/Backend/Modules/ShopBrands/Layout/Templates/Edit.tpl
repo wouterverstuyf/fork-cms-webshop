@@ -93,7 +93,7 @@
                             </li>
                             {/iteration:hidden}
                         </ul>
-
+                    </div>
                 </div>
 
             </td>
