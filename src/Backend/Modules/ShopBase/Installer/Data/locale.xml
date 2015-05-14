@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+	<Backend>
+		<ShopBase>
+			
+		</ShopBase>
+		<Core>
+			<item type="label" name="ShopBase">
+				<translation language="nl"><![CDATA[Shop base]]></translation>
+				<translation language="en"><![CDATA[Shop base]]></translation>
+			</item>
+		</Core>
+	</Backend>
+	<Frontend>
+		<core>
+		</core>
+	</Frontend>
+</locale>

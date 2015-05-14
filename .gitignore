@@ -62,6 +62,13 @@
 !/src/Backend/Modules/ShopShipping/
 !/src/Backend/Modules/ShopShipping/*
 
+
+!/src/Backend/Frontend/ShopBase/
+!/src/Backend/Frontend/ShopBase/*
+
+!/src/Backend/Modules/ShopBase/
+!/src/Backend/Modules/ShopBase/*
+
 !/laravel/
 /laravel/*
 
