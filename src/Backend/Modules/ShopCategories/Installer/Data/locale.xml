@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+	<Backend>
+		<ShopCategories>
+			<item type="label" name="AddShopCategories">
+				<translation language="nl"><![CDATA[categorie toevoegen]]></translation>
+				<translation language="en"><![CDATA[add category]]></translation>
+			</item>
+			<item type="label" name="ShopCategories">
+				<translation language="nl"><![CDATA[categories]]></translation>
+				<translation language="en"><![CDATA[categories]]></translation>
+			</item>
+			<item type="label" name="ShopCategoriesDetail">
+				<translation language="nl"><![CDATA[categorie detail]]></translation>
+				<translation language="en"><![CDATA[category detail]]></translation>
+			</item>
+			<item type="label" name="Delete">
+				<translation language="nl"><![CDATA[verwijder]]></translation>
+				<translation language="en"><![CDATA[delete]]></translation>
+			</item>
+		</ShopCategories>
+		<Core>
+			<item type="label" name="ShopCategories">
+				<translation language="nl"><![CDATA[categories]]></translation>
+				<translation language="en"><![CDATA[categories]]></translation>
+			</item>
+		</Core>
+	</Backend>
+	<Frontend>
+		<core>
+		</core>
+	</Frontend>
+</locale>

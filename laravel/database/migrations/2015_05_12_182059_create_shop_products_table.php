@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductsTable extends Migration {
+class CreateShopProductsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -13,7 +13,7 @@ class CreateProductsTable extends Migration {
 	public function up()
 	{
 		//
-		Schema::create('products', function($table)
+		Schema::create('shop_products', function($table)
 		{
 			$table->bigIncrements('id');
 
@@ -37,30 +37,31 @@ class CreateProductsTable extends Migration {
 			$table->dateTime('new_from')->nullable();
 			$table->dateTime('new_until')->nullable();
 
-			$table->boolean('hidden');
-			$table->timestamp('publish_at');
+			$table->enum('hidden', ['N', 'Y'])->default('N');
+			$table->timestamp('publish_on');
 
 			$table->integer('brand_id')->nullable();
 			$table->integer('user_id');
-			$table->integer('unit_id');
+			$table->integer('unit_id')->nullable();
 
 			$table->index('brand_id');
 			$table->index('user_id');
 			$table->index('unit_id');
 
-			$table->integer('bought_count');
+			$table->integer('bought_count')->default(0);
 
 			$table->char('image', 255)->nullable();
 			$table->char('sku', 255)->nullable();
 			$table->char('barcode', 255)->nullable();
 
 			$table->boolean('deleted');
-			$table->timestamp('deleted_at')->nullable();
+			$table->timestamp('deleted_on')->nullable();
 
 			$table->tinyInteger('age_start')->default(0);
 			$table->tinyInteger('age_end')->default(100);
 
-			$table->timestamps();
+			$table->timestamp('created_on')->nullable();
+			$table->timestamp('edited_on')->nullable();
 		});
 	}
 
@@ -71,7 +72,7 @@ class CreateProductsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('products');
+		Schema::drop('shop_products');
 	}
 
 }

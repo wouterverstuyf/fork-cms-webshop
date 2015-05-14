@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductsProperties extends Migration {
+class CreateShopProductsProperties extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,13 @@ class CreateProductsProperties extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('products_properties', function($table)
+		Schema::create('shop_products_properties', function($table)
 		{
 			$table->increments('id');
 			$table->timestamps();
 		});
 
-		Schema::create('products_properties_content', function($table)
+		Schema::create('shop_products_properties_content', function($table)
 		{
 			$table->bigInteger('product_property_id');
 			$table->index('product_property_id');
@@ -34,8 +34,8 @@ class CreateProductsProperties extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('products_properties');
-		Schema::drop('products_properties_content');
+		Schema::drop('shop_products_properties');
+		Schema::drop('shop_products_properties_content');
 	}
 
 }

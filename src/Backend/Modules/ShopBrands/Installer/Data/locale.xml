@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+	<Backend>
+		<ShopBrands>
+			<item type="label" name="AddShopBrands">
+				<translation language="nl"><![CDATA[merk toevoegen]]></translation>
+				<translation language="en"><![CDATA[add brand]]></translation>
+			</item>
+			<item type="label" name="ShopBrands">
+				<translation language="nl"><![CDATA[merken]]></translation>
+				<translation language="en"><![CDATA[brands]]></translation>
+			</item>
+			<item type="label" name="ShopBrandsDetail">
+				<translation language="nl"><![CDATA[merk detail]]></translation>
+				<translation language="en"><![CDATA[brand detail]]></translation>
+			</item>
+			<item type="message" name="HelpWebsite">
+				<translation language="nl"><![CDATA[Vergeet http:// niet toe te voegen]]></translation>
+				<translation language="en"><![CDATA[Don't forgot to add http://]]></translation>
+			</item>
+			<item type="label" name="Delete">
+				<translation language="nl"><![CDATA[verwijder]]></translation>
+				<translation language="en"><![CDATA[delete]]></translation>
+			</item>
+		</ShopBrands>
+		<Core>
+			<item type="label" name="ShopBrands">
+				<translation language="nl"><![CDATA[merken]]></translation>
+				<translation language="en"><![CDATA[brands]]></translation>
+			</item>
+		</Core>
+	</Backend>
+	<Frontend>
+		<core>
+		</core>
+	</Frontend>
+</locale>

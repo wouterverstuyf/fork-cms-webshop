@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductsContent extends Migration {
+class CreateShopProductsContent extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,7 @@ class CreateProductsContent extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('products_content', function($table)
+		Schema::create('shop_products_content', function($table)
 		{
 			$table->bigInteger('product_id');
 			$table->index('product_id');
@@ -29,7 +29,7 @@ class CreateProductsContent extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('products_content');
+		Schema::drop('shop_products_content');
 	}
 
 }

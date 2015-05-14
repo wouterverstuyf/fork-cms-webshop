@@ -32,11 +32,11 @@
 !/src/Backend/Modules/ModuleMaker/
 !/src/Backend/Modules/ModuleMaker/*
 
-!/src/Frontend/Modules/Brands/
-!/src/Frontend/Modules/Brands/*
+!/src/Frontend/Modules/ShopBrands/
+!/src/Frontend/Modules/ShopBrands/*
 
-!/src/Backend/Modules/Brands/
-!/src/Backend/Modules/Brands/*
+!/src/Backend/Modules/ShopBrands/
+!/src/Backend/Modules/ShopBrands/*
 
 !/src/Frontend/Modules/Shop/
 !/src/Frontend/Modules/Shop/*
@@ -44,11 +44,17 @@
 !/src/Backend/Modules/Shop/
 !/src/Backend/Modules/Shop/*
 
-!/src/Backend/Frontend/Products/
-!/src/Backend/Frontend/Products/*
+!/src/Backend/Frontend/ShopProducts/
+!/src/Backend/Frontend/ShopProducts/*
 
-!/src/Backend/Modules/Products/
-!/src/Backend/Modules/Products/*
+!/src/Backend/Modules/ShopProducts/
+!/src/Backend/Modules/ShopProducts/*
+
+!/src/Backend/Frontend/ShopCategories/
+!/src/Backend/Frontend/ShopCategories/*
+
+!/src/Backend/Modules/ShopCategories/
+!/src/Backend/Modules/ShopCategories/*
 
 !/laravel/
 /laravel/*

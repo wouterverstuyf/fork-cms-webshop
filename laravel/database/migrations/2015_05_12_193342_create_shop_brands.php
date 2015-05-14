@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBrands extends Migration {
+class CreateShopBrands extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,16 +12,17 @@ class CreateBrands extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('brands', function($table)
+		Schema::create('shop_brands', function($table)
 		{
 			$table->increments('id');
 			$table->char('image', 255)->nullable();
 			$table->char('website', 255)->nullable();
-			$table->boolean('hidden');
-			$table->timestamps();
+			$table->enum('hidden', ['N', 'Y'])->default('N');
+			$table->timestamp('created_on')->nullable();
+			$table->timestamp('edited_on')->nullable();
 		});
 
-		Schema::create('brands_content', function($table)
+		Schema::create('shop_brands_content', function($table)
 		{
 			$table->bigInteger('brand_id');
 			$table->index('brand_id');
@@ -38,9 +39,8 @@ class CreateBrands extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('brands_content');
-		Schema::drop('brands');
-
+		Schema::drop('shop_brands_content');
+		Schema::drop('shop_brands');
 	}
 
 }
