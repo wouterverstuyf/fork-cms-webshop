@@ -15,11 +15,16 @@ class Helper
 {
 	public static function calculatePriceInclVat($priceExcl, $vatPct)
     {
-    	
+    	return ($priceExcl * ((int) $vatPct + 1));
     }
 
-    public static function calculatePriceInclVat($priceIncl, $vatPct)
+    public static function calculatePriceExclVat($priceIncl, $vatPct)
     {
-        
+        return (($priceIncl / (100 + (int) $vatPct)) * 100);
+    }
+
+    public static function calculatePriceVat($priceExcl, $vatPct)
+    {
+        return ($priceExcl * ((int) $vatPct + 1)) - $priceExcl;
     }
 }
