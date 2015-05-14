@@ -72,11 +72,11 @@ class Edit extends ActionEdit
 
         // set hidden values
         $rbtHiddenValues[] = array('label' => Language::lbl('NotAvailable', $this->URL->getModule()), 'value' => 'Y');
-        $rbtHiddenValues[] = array('label' => Language::lbl('Available'), 'value' => 'N');
+        $rbtHiddenValues[] = array('label' => Language::lbl('Available', $this->URL->getModule()), 'value' => 'N');
         $this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
 
-        $rbtPriceIsValues[] = array('label' => Language::lbl('IsInclVat', $this->URL->getModule()), 'value' => 'Y');
-        $rbtPriceIsValues[] = array('label' => Language::lbl('IsExclVat'), 'value' => 'N');
+        $rbtPriceIsValues[] = array('label' => Language::msg('IsInclVat', $this->URL->getModule()), 'value' => 'Y');
+        $rbtPriceIsValues[] = array('label' => Language::msg('IsExclVat', $this->URL->getModule()), 'value' => 'N');
         $this->frm->addRadiobutton('price_is', $rbtPriceIsValues, $this->record['price_is_incl_vat']);
 
     }

@@ -33,7 +33,7 @@
                     {$txtPrice} {$txtPriceError}
                 </p>
 
-                <ul class="inputList">
+                <ul class="inputList p0">
                     {iteration:price_is}
                     <li>
                         {$price_is.rbtPriceIs}
@@ -63,7 +63,7 @@
             </div>
 
             <div class="options">
-                <ul class="inputList">
+                <ul class="inputList p0">
                     {iteration:hidden}
                     <li>
                         {$hidden.rbtHidden}

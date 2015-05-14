@@ -10,6 +10,64 @@
 				<translation language="nl"><![CDATA[shipping detail]]></translation>
 				<translation language="en"><![CDATA[shipping detail]]></translation>
 			</item>
+			<item type="label" name="Destination">
+				<translation language="nl"><![CDATA[destinatie]]></translation>
+				<translation language="en"><![CDATA[destination]]></translation>
+			</item>
+
+			<item type="label" name="VatPct">
+				<translation language="nl"><![CDATA[btw %]]></translation>
+				<translation language="en"><![CDATA[vat %]]></translation>
+			</item>
+			<item type="message" name="IsInclVat">
+				<translation language="nl"><![CDATA[De prijs is inclusief btw.]]></translation>
+				<translation language="en"><![CDATA[The price is vat inclusive.]]></translation>
+			</item>
+			<item type="message" name="IsExclVat">
+				<translation language="nl"><![CDATA[De prijs is exclusief btw.]]></translation>
+				<translation language="en"><![CDATA[The price is vat exclusive.]]></translation>
+			</item>
+
+			<item type="label" name="AddVatFor">
+				<translation language="nl"><![CDATA[pas btw toe voor]]></translation>
+				<translation language="en"><![CDATA[apply vat for]]></translation>
+			</item>
+
+			<item type="label" name="AddVatConsumer">
+				<translation language="nl"><![CDATA[pas btw toe voor particulieren]]></translation>
+				<translation language="en"><![CDATA[apply vat for private consumers]]></translation>
+			</item>
+
+			<item type="label" name="AddVatCompany">
+				<translation language="nl"><![CDATA[pas btw toe voor bedrijven]]></translation>
+				<translation language="en"><![CDATA[apply vat for companies]]></translation>
+			</item>
+
+			<item type="label" name="NotAvailable">
+				<translation language="nl"><![CDATA[niet beschikbaar]]></translation>
+				<translation language="en"><![CDATA[not available]]></translation>
+			</item>
+
+			<item type="label" name="Available">
+				<translation language="nl"><![CDATA[beschikbaar]]></translation>
+				<translation language="en"><![CDATA[available]]></translation>
+			</item>
+
+			<item type="label" name="ShippingDuration">
+				<translation language="nl"><![CDATA[zending duurtijd]]></translation>
+				<translation language="en"><![CDATA[shipping duration]]></translation>
+			</item>
+
+			<item type="message" name="DurationInDays">
+				<translation language="nl"><![CDATA[Geef de duurtijd op in dagen.]]></translation>
+				<translation language="en"><![CDATA[Add the duration in days.]]></translation>
+			</item>
+
+			<item type="label" name="FreeFrom">
+				<translation language="nl"><![CDATA[gratis zending vanaf]]></translation>
+				<translation language="en"><![CDATA[free shipping from]]></translation>
+			</item>
+
 		</ShopShipping>
 		<Core>
 			<item type="label" name="ShopShipping">
