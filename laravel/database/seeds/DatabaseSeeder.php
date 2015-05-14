@@ -3,6 +3,8 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
+use database\seeds\ShopShippingTableSeeder;
+
 class DatabaseSeeder extends Seeder {
 
 	/**
