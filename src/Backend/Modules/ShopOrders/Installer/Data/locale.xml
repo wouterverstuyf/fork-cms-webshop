@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+	<Backend>
+		<ShopOrders>
+
+		</ShopOrders>
+		<Core>
+			<item type="label" name="ShopOrders">
+				<translation language="nl"><![CDATA[bestellingen]]></translation>
+				<translation language="en"><![CDATA[orders]]></translation>
+			</item>
+			<item type="label" name="ShopOrdersDetail">
+				<translation language="nl"><![CDATA[bestellingen detail]]></translation>
+				<translation language="en"><![CDATA[orders detail]]></translation>
+			</item>
+			<item type="label" name="Shop">
+				<translation language="nl"><![CDATA[shop]]></translation>
+				<translation language="en"><![CDATA[shop]]></translation>
+			</item>
+		</Core>
+	</Backend>
+	<Frontend>
+		<core>
+		</core>
+	</Frontend>
+</locale>

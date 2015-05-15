@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+	<Backend>
+		<ShopDiscountCodes>
+			<item type="label" name="AddShopDiscountCodes">
+				<translation language="nl"><![CDATA[korting code toevoegen]]></translation>
+				<translation language="en"><![CDATA[add discount code]]></translation>
+			</item>
+			<item type="label" name="Code">
+				<translation language="nl"><![CDATA[code]]></translation>
+				<translation language="en"><![CDATA[code]]></translation>
+			</item>
+			<item type="label" name="Discount">
+				<translation language="nl"><![CDATA[korting]]></translation>
+				<translation language="en"><![CDATA[discount]]></translation>
+			</item>
+			<item type="label" name="LimitUsage">
+				<translation language="nl"><![CDATA[limiteer]]></translation>
+				<translation language="en"><![CDATA[limit]]></translation>
+			</item>
+
+			<item type="label" name="LimitByDates">
+				<translation language="nl"><![CDATA[limiteer in tijd]]></translation>
+				<translation language="en"><![CDATA[limit in time]]></translation>
+			</item>
+
+			<item type="label" name="Until">
+				<translation language="nl"><![CDATA[tot]]></translation>
+				<translation language="en"><![CDATA[until]]></translation>
+			</item>
+
+
+			<item type="message" name="HelpLimit">
+				<translation language="nl"><![CDATA[Hoeveel keer mag deze code gebruikt worden:]]></translation>
+				<translation language="en"><![CDATA[Number of times this code can be used.]]></translation>
+			</item>
+
+		</ShopDiscountCodes>
+		<Core>
+			<item type="label" name="ShopDiscountCodes">
+				<translation language="nl"><![CDATA[korting codes]]></translation>
+				<translation language="en"><![CDATA[discount codes]]></translation>
+			</item>
+			
+		</Core>
+	</Backend>
+	<Frontend>
+		<core>
+		</core>
+	</Frontend>
+</locale>

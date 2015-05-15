@@ -38,11 +38,6 @@
 !/src/Backend/Modules/ShopBrands/
 !/src/Backend/Modules/ShopBrands/*
 
-!/src/Frontend/Modules/Shop/
-!/src/Frontend/Modules/Shop/*
-
-!/src/Backend/Modules/Shop/
-!/src/Backend/Modules/Shop/*
 
 !/src/Frontend/Modules/ShopProducts/
 !/src/Frontend/Modules/ShopProducts/*
@@ -68,6 +63,18 @@
 
 !/src/Backend/Modules/ShopBase/
 !/src/Backend/Modules/ShopBase/*
+
+!/src/Frontend/Modules/ShopDiscountCodes/
+!/src/Frontend/Modules/ShopDiscountCodes/*
+
+!/src/Backend/Modules/ShopDiscountCodes/
+!/src/Backend/Modules/ShopDiscountCodes/*
+
+!/src/Frontend/Modules/ShopOrders/
+!/src/Frontend/Modules/ShopOrders/*
+
+!/src/Backend/Modules/ShopOrders/
+!/src/Backend/Modules/ShopOrders/*
 
 !/laravel/
 /laravel/*
