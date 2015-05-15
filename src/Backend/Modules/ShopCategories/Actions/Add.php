@@ -119,6 +119,8 @@ class Add extends ActionAdd
                     );
                 }
 
+                BackendShopCategoriesModel::insertTreeNode($item['id'], 2);
+
                 // insert it
                BackendShopCategoriesModel::insertContent($content);
 

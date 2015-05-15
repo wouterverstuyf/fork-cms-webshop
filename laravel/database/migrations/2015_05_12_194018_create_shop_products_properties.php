@@ -34,8 +34,8 @@ class CreateShopProductsProperties extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('shop_products_properties');
-		Schema::drop('shop_products_properties_content');
+		Schema::dropIfExists('shop_products_properties');
+		Schema::dropIfExists('shop_products_properties_content');
 	}
 
 }

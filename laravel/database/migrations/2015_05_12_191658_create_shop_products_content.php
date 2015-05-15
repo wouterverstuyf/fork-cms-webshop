@@ -29,7 +29,7 @@ class CreateShopProductsContent extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('shop_products_content');
+		Schema::dropIfExists('shop_products_content');
 	}
 
 }

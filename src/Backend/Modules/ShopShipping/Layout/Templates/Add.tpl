@@ -6,99 +6,110 @@
 </div>
 
 {form:add}
-   
-        <div class="box">
-            <div class="heading">
-                <h3>
-                    <label for="country">{$lblDestination|ucfirst}</label>
-                </h3>
-            </div>
-            <div class="options">
-                {$ddmCountry} {$ddmCountryError}
-            </div>
-        </div>
 
-        <div class="box">
-            <div class="heading">
-                <h3>
-                    <label for="vatPct">{$lblPrice|ucfirst}</label>
-                </h3>
-            </div>
-            <div class="options">
-                <p>
-                    <label for="vatPct">{$lblVatPct|ucfirst}</label>
-                    {$txtVatPct} {$txtVatPctError}
-                </p>
-                 <p>
-                    <label for="price">{$lblPrice|ucfirst}</label>
-                    {$txtPrice} {$txtPriceError}
-                </p>
+ <table border="0" cellspacing="0" cellpadding="0" width="100%">
+        <tr>
+            <td id="leftColumn">
 
-                <ul class="inputList p0">
-                    {iteration:price_is}
-                    <li>
-                        {$price_is.rbtPriceIs}
-                        <label for="{$price_is.id}">{$price_is.label}</label>
-                    </li>
-                    {/iteration:price_is}
-                </ul>
+                <div class="box">
+                    <div class="heading">
+                        <h3>
+                            <label for="vatPct">{$lblPrice|ucfirst}</label>
+                        </h3>
+                    </div>
+                    <div class="options">
+                        <p>
+                            <label for="vatPct">{$lblVatPct|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+                            {$txtVatPct} {$txtVatPctError}
+                        </p>
+                         <p>
+                            <label for="price">{$lblPrice|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+                            {$txtPrice} {$txtPriceError}
+                        </p>
 
-            </div>
-        </div>
-    
-        <div class="box">
-            <div class="heading">
-                <h3>
-                    {$lblAddVatFor|ucfirst}
-                </h3>
-            </div>
-            <div class="options">
-                <p><label for="addVatConsumer">{$chkAddVatConsumer} {$lblAddVatConsumer|ucfirst}</label></p>
-                <p><label for="addVatCompany">{$chkAddVatCompany} {$lblAddVatCompany|ucfirst}</label></p>
-            </div>
-        </div>
+                        <ul class="inputList p0">
+                            {iteration:price_is}
+                            <li>
+                                {$price_is.rbtPriceIs}
+                                <label for="{$price_is.id}">{$price_is.label}</label>
+                            </li>
+                            {/iteration:price_is}
+                        </ul>
 
-         <div class="box">
-            <div class="heading">
-                <h3>{$lblStatus|ucfirst}</h3>
-            </div>
+                    </div>
+                </div>
 
-            <div class="options">
-                <ul class="inputList p0">
-                    {iteration:hidden}
-                    <li>
-                        {$hidden.rbtHidden}
-                        <label for="{$hidden.id}">{$hidden.label}</label>
-                    </li>
-                    {/iteration:hidden}
-                </ul>
-            </div>
-        </div>
+             </td>
 
+             <td id="sidebar">
 
-        <div class="box">
-            <div class="heading">
-                <h3>
-                     <h3>{$chkHasDuration} <label for="hasDuration">{$lblShippingDuration|ucfirst}</label></h3>
-                </h3>
-            </div>
-            <div class="options">
-                {$txtDuration} {$txtDurationError}
-                <span class="helpTxt">{$msgDurationInDays}</span>
-            </div>
-        </div>
+                <div class="box">
+                    <div class="heading">
+                        <h3>
+                            <label for="country">{$lblDestination|ucfirst}</label>
+                        </h3>
+                    </div>
+                    <div class="options">
+                        {$ddmCountry} {$ddmCountryError}
+                    </div>
+                </div>
 
-        <div class="box">
-            <div class="heading">
-                <h3>{$chkHasFreeFrom} <label for="hasFreeFrom">{$lblFreeFrom|ucfirst}</label></h3>
-            </div>
-            <div class="options toggleNew toggle">
-                <p>
-                    <label for="freeFromPrice">{$lblPrice|ucfirst}</label>
-                    {$txtFreeFromPrice} {$txtFreeFromPriceError}
-                </p>
-            </div>
-        </div>
+                <div class="box">
+                    <div class="heading">
+                        <h3>
+                            {$lblAddVatFor|ucfirst}
+                        </h3>
+                    </div>
+                    <div class="options">
+                        <p><label for="addVatConsumer">{$chkAddVatConsumer} {$lblAddVatConsumer|ucfirst}</label></p>
+                        <p><label for="addVatCompany">{$chkAddVatCompany} {$lblAddVatCompany|ucfirst}</label></p>
+                    </div>
+                </div>
+
+                 <div class="box">
+                    <div class="heading">
+                        <h3>
+                             <h3>{$chkHasDuration} <label for="hasDuration">{$lblShippingDuration|ucfirst}</label></h3>
+                        </h3>
+                    </div>
+                    <div class="options">
+                        {$txtDuration} {$txtDurationError}
+                        <span class="helpTxt">{$msgDurationInDays}</span>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="heading">
+                        <h3>{$chkHasFreeFrom} <label for="hasFreeFrom">{$lblFreeFrom|ucfirst}</label></h3>
+                    </div>
+                    <div class="options toggleNew toggle">
+                        <p>
+                            <label for="freeFromPrice">{$lblPrice|ucfirst}</label>
+                            {$txtFreeFromPrice} {$txtFreeFromPriceError}
+                        </p>
+                    </div>
+                </div>
+
+                 <div class="box">
+                    <div class="heading">
+                        <h3>{$lblStatus|ucfirst}</h3>
+                    </div>
+
+                    <div class="options">
+                        <ul class="inputList p0">
+                            {iteration:hidden}
+                            <li>
+                                {$hidden.rbtHidden}
+                                <label for="{$hidden.id}">{$hidden.label}</label>
+                            </li>
+                            {/iteration:hidden}
+                        </ul>
+                    </div>
+                </div>
+
+            </td>
+        </tr>
+    </table>
 
     <div class="fullwidthOptions">
         <div class="buttonHolderRight">

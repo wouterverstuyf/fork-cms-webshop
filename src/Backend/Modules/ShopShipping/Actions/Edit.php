@@ -148,7 +148,6 @@ class Edit extends ActionEdit
                 }
 
                 BackendShopShippingModel::update($item);
-                $item['id'] = $this->id;
 
                 Model::triggerEvent(
                     $this->getModule(), 'after_edit', $item

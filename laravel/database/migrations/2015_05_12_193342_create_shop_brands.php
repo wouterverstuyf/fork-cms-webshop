@@ -39,8 +39,8 @@ class CreateShopBrands extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('shop_brands_content');
-		Schema::drop('shop_brands');
+		Schema::dropIfExists('shop_brands_content');
+		Schema::dropIfExists('shop_brands');
 	}
 
 }

@@ -40,7 +40,7 @@ class CreateShopShipping extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('shop_shipping');
+		Schema::dropIfExists('shop_shipping');
 	}
 
 }

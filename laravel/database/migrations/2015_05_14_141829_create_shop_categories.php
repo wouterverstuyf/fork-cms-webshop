@@ -17,16 +17,18 @@ class CreateShopCategories extends Migration {
 			$table->increments('id');
 			$table->char('image', 255)->nullable();
 
-			$table->text('path')->nullable();
+			//$table->text('path')->nullable();
 			//$table->index('path');
 
-			$table->integer('parent_id')->default(0);
-			$table->index('parent_id');
+			$table->integer('child_of')->nullable();
+			$table->index('child_of');
 
 			$table->enum('hidden', ['N', 'Y'])->default('N');
 
 			$table->integer('products_count')->default(0);
 			$table->integer('children_count')->default(0);
+
+			$table->integer('sequence')->default(0);
 
 			$table->timestamp('created_on')->nullable();
 			$table->timestamp('edited_on')->nullable();
@@ -40,6 +42,14 @@ class CreateShopCategories extends Migration {
 			$table->char('name', 255);
 			$table->text('description')->nullable();
 		});
+
+		Schema::create('shop_categories_treepaths', function($table)
+		{
+			$table->integer('ancestor');
+			$table->integer('descendant');
+			$table->primary(['ancestor', 'descendant']);
+			$table->char('length')->default(0);
+		});
 	}
 
 	/**
@@ -49,8 +59,9 @@ class CreateShopCategories extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('shop_categories_content');
-		Schema::drop('shop_categories');
+		Schema::dropIfExists('shop_categories_content');
+		Schema::dropIfExists('shop_categories');
+		Schema::dropIfExists('shop_categories_treepaths');
 	}
 
 }

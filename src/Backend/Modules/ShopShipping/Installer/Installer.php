@@ -29,12 +29,8 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, 'ShopShipping', 'Edit');
         $this->setActionRights(1, 'ShopShipping', 'Delete');
 
-        // add extra's
-        $subnameID = $this->insertExtra('ShopShipping', 'block', 'ShopShipping', null, null, 'N', 1000);
-        $this->insertExtra('ShopShipping', 'block', 'ShopShippingDetail', 'Detail', null, 'N', 1001);
-
         $navigationModulesId = $this->setNavigation(null, 'Modules');
-        $navigationModulesId = $this->setNavigation($navigationModulesId, 'Shop');
+        $navigationModulesId = $this->setNavigation($navigationModulesId, 'Shop', 'shop_orders/index');
         $navigationclassnameId = $this->setNavigation(
             $navigationModulesId,
             'ShopShipping',

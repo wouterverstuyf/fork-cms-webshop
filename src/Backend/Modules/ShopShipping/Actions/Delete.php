@@ -34,7 +34,7 @@ class Delete extends ActionDelete
 
             $this->redirect(
                 Model::createURLForAction('Index') . '&report=deleted&var=' .
-                urlencode($this->record['title'])
+                urlencode($this->record['country'])
             );
         }
         else $this->redirect(Model::createURLForAction('Index') . '&error=non-existing');

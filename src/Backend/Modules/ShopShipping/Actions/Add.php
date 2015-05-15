@@ -131,7 +131,7 @@ class Add extends ActionAdd
                     $this->getModule(), 'after_add', $item
                 );
                 $this->redirect(
-                    Model::createURLForAction('Index') . '&report=added&highlight=row-' . $item['id']
+                    Model::createURLForAction('Edit') . '&report=added&id=' . $item['id']
                 );
             }
         }

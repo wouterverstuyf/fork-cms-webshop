@@ -72,7 +72,7 @@ class CreateShopProductsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('shop_products');
+		Schema::dropIfExists('shop_products');
 	}
 
 }
