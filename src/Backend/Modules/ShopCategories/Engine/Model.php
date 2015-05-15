@@ -12,6 +12,8 @@ use Backend\Core\Engine\Language;
  */
 class Model
 {
+
+
     /**
      * Delete a certain item
      *
@@ -164,7 +166,7 @@ class Model
         return BackendModel::get('database')->getRecords($query, array(Language::getWorkingLanguage()));
     }
 
-    public static function getTreeSecond()
+    public static function getTreeStartByRoot()
     {   
         // @todo see http://stackoverflow.com/questions/8252323/mysql-closure-table-hierarchical-database-how-to-pull-information-out-in-the-c/8288201#8288201 for visual
         // the whole tree
@@ -186,7 +188,7 @@ class Model
         return BackendModel::get('database')->getRecords($query, array(Language::getWorkingLanguage()));
     }
 
-    public static function getTreeForParent($id)
+    public static function getTreeByParent($id)
     {   
         // @todo see http://stackoverflow.com/questions/8252323/mysql-closure-table-hierarchical-database-how-to-pull-information-out-in-the-c/8288201#8288201 for visual
         // the whole tree
@@ -209,7 +211,7 @@ class Model
     }
 
 
-    public static function moverTeeNode($node, $to)
+    public static function moverTreeNode($node, $to)
     {
         // build query
         $query = 'INSERT INTO shop_categories_treepaths (ancestor, descendant, length)

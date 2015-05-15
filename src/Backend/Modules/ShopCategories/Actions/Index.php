@@ -30,7 +30,7 @@ class Index extends ActionIndex
         $this->parse();
         $this->display();
 
-        //\Spoon::dump(BackendShopCategoriesModel::getTreeSecond());
+        \Spoon::dump(BackendShopCategoriesModel::getTreeByParent(1));
     }
 
     /**
@@ -55,11 +55,12 @@ class Index extends ActionIndex
             $query .= ' AND i.child_of = ?'; 
             $parameters[] = $this->child_of;
 
-            $tree =  BackendShopCategoriesModel::getTreeForParent($this->child_of);
+            $tree =  BackendShopCategoriesModel::getTreeByParent($this->child_of);
 
             foreach($tree as &$t){
                 $t['selected'] = $t['id'] == $this->child_of;
             }
+
             $this->tpl->assign('tree', $tree);
 
         } else {
