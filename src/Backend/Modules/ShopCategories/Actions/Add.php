@@ -49,6 +49,8 @@ class Add extends ActionAdd
 
         $this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
 
+        $this->frm->addDropdown('child_of', BackendShopCategoriesModel::getForDropdown())->setDefaultElement('','');
+
         foreach($this->languages as &$language)
         {
             $language['formElements']['txtName'] = $this->frm->addText('name_'. $language['abbreviation'], isset($this->record['content'][$language['abbreviation']]['name']) ? $this->record['content'][$language['abbreviation']]['name'] : '', null, 'inputText title');
@@ -88,6 +90,8 @@ class Add extends ActionAdd
             if ($this->frm->isCorrect()) {
 
                 $item['hidden'] = $fields['hidden']->getValue();
+                $item['child_of'] = empty($fields['child_of']->getValue()) ? NULL : $fields['child_of']->getValue();
+                $item['sequence'] = BackendShopCategoriesModel::getMaximumSequence() + 1;
 
                 $imagePath = ShopHelper::generateFolders($this->getModule());
 
@@ -119,7 +123,7 @@ class Add extends ActionAdd
                     );
                 }
 
-                BackendShopCategoriesModel::insertTreeNode($item['id'], 2);
+                BackendShopCategoriesModel::insertTreeNode($item['id'], $item['child_of'] ? $item['child_of'] : $item['id']);
 
                 // insert it
                BackendShopCategoriesModel::insertContent($content);

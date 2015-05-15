@@ -12,6 +12,20 @@
     </div>
 </div>
 
+{option:tree}
+    <div class="wizard">
+        <ul>
+            {iteration:tree}
+                {option:!tree.last}
+                    <li class="{option:tree.selected}selected{/option:tree.selected}">
+                        <a href="{$var|geturl:'Index'}{option:!tree.child_of}&amp;child_of={$tree.id}{/option:!tree.child_of}"><b>{$tree.name}</b></a>
+                    </li>
+                {/option:!tree.last}
+            {/iteration:tree}
+        </ul>
+    </div>
+{/option:tree}
+
 {option:dataGrid}
     <div class="dataGridHolder">
         {$dataGrid}

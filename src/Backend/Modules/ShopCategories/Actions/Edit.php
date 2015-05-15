@@ -69,6 +69,8 @@ class Edit extends ActionEdit
 
         $this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
 
+        $this->frm->addDropdown('child_of', BackendShopCategoriesModel::getForDropdown(), $this->record['child_of'])->setDefaultElement('','');
+
         foreach($this->languages as &$language)
         {
             $language['formElements']['txtName'] = $this->frm->addText('name_'. $language['abbreviation'], isset($this->record['content'][$language['abbreviation']]['name']) ? $this->record['content'][$language['abbreviation']]['name'] : '', null, 'inputText title');
@@ -106,11 +108,14 @@ class Edit extends ActionEdit
                  $this->frm->getField('name_'. $language['abbreviation'])->isFilled(Language::getError('FieldIsRequired'));
             }
 
-
             if ($this->frm->isCorrect()) {
                 $item['id'] = $this->id;
 
                 $item['hidden'] = $fields['hidden']->getValue();
+
+                // @todo check of child of is changed else calculate new treepaths
+                $item['child_of'] = empty($fields['child_of']->getValue()) ? NULL : $fields['child_of']->getValue();
+
 
                 $imagePath = ShopHelper::generateFolders($this->getModule());
 

@@ -67,6 +67,17 @@
                     {/option:record.image}
                 </div>
 
+                 <div class="box">
+                    <div class="heading">
+                        <h3>
+                            <label for="childOf">{$lblChildOf|ucfirst}</label>
+                        </h3>
+                    </div>
+                    <div class="options">
+                        {$ddmChildOf} {$ddmChildOfError}
+                    </div>
+                </div>
+
 
                 <div class="box">
                     <div class="heading">
