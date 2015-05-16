@@ -2,7 +2,7 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 
 <div class="pageTitle">
-    <h2>{$lblShopCategories|ucfirst}: {$lblAdd}</h2>
+    <h2>{$lblShopProductProperties|ucfirst}: {$lblAdd}</h2>
 </div>
 
 {form:add}
@@ -40,17 +40,6 @@
 
              <td id="sidebar">
 
-              <div class="box">
-                    <div class="heading">
-                        <h3>
-                            <label for="childOf">{$lblChildOf|ucfirst}</label>
-                        </h3>
-                    </div>
-                    <div class="options">
-                        {$ddmChildOf} {$ddmChildOfError}
-                    </div>
-                </div>
-
                 <div class="box">
                     <div class="heading">
                         <h3>
@@ -62,8 +51,18 @@
                     </div>
                 </div>
 
-               
-              
+                <div class="box">
+                    <div class="heading">
+                        <h3>
+                            <label for="website">{$lblWebsite|ucfirst}</label>
+                        </h3>
+                    </div>
+                    <div class="options">
+                        {$txtWebsite} {$txtWebsiteError}
+                        <span class="helpTxt">{$msgHelpWebsite}</span>
+                    </div>
+                </div>
+
                 <div class="box">
                     <div class="heading">
                         <h3>{$lblStatus|ucfirst}</h3>
@@ -78,7 +77,8 @@
                             </li>
                             {/iteration:hidden}
                         </ul>
-                    </div>
+                     </div>
+
                 </div>
 
             </td>

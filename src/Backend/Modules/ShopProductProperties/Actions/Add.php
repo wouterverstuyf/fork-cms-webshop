@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Modules\ShopCategories\Actions;
+namespace Backend\Modules\ShopProductProperties\Actions;
 
 use Backend\Core\Engine\Base\ActionAdd;
 use Backend\Core\Engine\Form;
 use Backend\Core\Engine\Language;
 use Backend\Core\Engine\Model;
-use Backend\Modules\ShopCategories\Engine\Model as BackendShopCategoriesModel;
+use Backend\Modules\ShopProductProperties\Engine\Model as BackendShopProductPropertiesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 use Backend\Modules\ShopBase\Engine\Helper as ShopHelper;
@@ -41,6 +41,7 @@ class Add extends ActionAdd
     {
         $this->frm = new Form('add');
 
+        $this->frm->addText('website');
         $this->frm->addImage('image');
 
         // set hidden values
@@ -48,8 +49,6 @@ class Add extends ActionAdd
         $rbtHiddenValues[] = array('label' => Language::lbl('Published'), 'value' => 'N');
 
         $this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
-
-        $this->frm->addDropdown('child_of', BackendShopCategoriesModel::getForDropdown())->setDefaultElement('','');
 
         foreach($this->languages as &$language)
         {
@@ -80,6 +79,8 @@ class Add extends ActionAdd
             // validation
             $fields = $this->frm->getFields();
 
+            if($fields['website']->isFilled()) $fields['website']->isURL(Language::err('InvalidURL'));
+
             ShopHelper::validateImage($this->frm, 'image');
 
             foreach($this->languages as $language)
@@ -88,10 +89,9 @@ class Add extends ActionAdd
             }
 
             if ($this->frm->isCorrect()) {
-
+                // build the item
+                $item['website'] = $fields['website']->getValue();
                 $item['hidden'] = $fields['hidden']->getValue();
-                $item['child_of'] = empty($fields['child_of']->getValue()) ? NULL : $fields['child_of']->getValue();
-                $item['sequence'] = BackendShopCategoriesModel::getMaximumSequence() + 1;
 
                 $imagePath = ShopHelper::generateFolders($this->getModule());
 
@@ -104,13 +104,13 @@ class Add extends ActionAdd
                     $fields['image']->generateThumbnails($imagePath, $item['image']);
                 }
 
-                $item['id'] = BackendShopCategoriesModel::insert($item);
+                $item['id'] = BackendShopProductPropertiesModel::insert($item);
 
                 $content = array();
 
                 foreach($this->languages as $language)
                 {
-                    $specific['category_id'] = $item['id'];
+                    $specific['brand_id'] = $item['id'];
                     $specific['language'] = $language['abbreviation'];
                     $specific['name'] = $this->frm->getField('name_'. $language['abbreviation'])->getValue();
                     $specific['description'] = ($this->frm->getField('description_'. $language['abbreviation'])->isFilled()) ? $this->frm->getField('description_'. $language['abbreviation'])->getValue() : null;
@@ -118,15 +118,13 @@ class Add extends ActionAdd
 
                      BackendSearchModel::saveIndex(
                         $this->getModule(), $item['id'],
-                        array('name' => $specific['name'], 'description' => $specific['description']),
+                        array('name' => $specific['name'], 'website' => $item['website'], 'description' => $specific['description']),
                         $language['abbreviation']
                     );
                 }
 
-                BackendShopCategoriesModel::insertTreeNode($item['id'], $item['child_of'] ? $item['child_of'] : $item['id'], $item['sequence'] );
-
                 // insert it
-               BackendShopCategoriesModel::insertContent($content);
+               BackendShopProductPropertiesModel::insertContent($content);
 
                 Model::triggerEvent(
                     $this->getModule(), 'after_add', $item

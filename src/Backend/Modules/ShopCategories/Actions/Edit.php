@@ -116,6 +116,11 @@ class Edit extends ActionEdit
                 // @todo check of child of is changed else calculate new treepaths
                 $item['child_of'] = empty($fields['child_of']->getValue()) ? NULL : $fields['child_of']->getValue();
 
+                if($item['child_of'] != $this->record['child_of']) {
+                    BackendShopCategoriesModel::deleteTreeNode($item['id']);
+                    BackendShopCategoriesModel::insertTreeNode($item['id'], $item['child_of'] ? $item['child_of'] : $item['id']);
+                }
+
 
                 $imagePath = ShopHelper::generateFolders($this->getModule());
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+	<Backend>
+		<ShopProductProperties>
+			<item type="label" name="AddShopProductProperties">
+				<translation language="nl"><![CDATA[eigenschap toevoegen]]></translation>
+				<translation language="en"><![CDATA[add property]]></translation>
+			</item>
+			<item type="label" name="ShopProductProperties">
+				<translation language="nl"><![CDATA[eigenschappen]]></translation>
+				<translation language="en"><![CDATA[properties]]></translation>
+			</item>
+		</ShopProductProperties>
+		<Core>
+			<item type="label" name="ShopProductProperties">
+				<translation language="nl"><![CDATA[eigenschappen]]></translation>
+				<translation language="en"><![CDATA[properties]]></translation>
+			</item>
+		</Core>
+	</Backend>
+	<Frontend>
+		<core>
+		</core>
+	</Frontend>
+</locale>

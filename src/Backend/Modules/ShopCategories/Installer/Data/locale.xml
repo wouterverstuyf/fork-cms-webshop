@@ -18,6 +18,10 @@
 				<translation language="nl"><![CDATA[verwijder]]></translation>
 				<translation language="en"><![CDATA[delete]]></translation>
 			</item>
+			<item type="label" name="ChildOf">
+				<translation language="nl"><![CDATA[kind van]]></translation>
+				<translation language="en"><![CDATA[child of]]></translation>
+			</item>
 		</ShopCategories>
 		<Core>
 			<item type="label" name="ShopCategories">

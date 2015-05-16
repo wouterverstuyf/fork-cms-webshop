@@ -6,11 +6,11 @@
  */
 
 /**
- * Interaction for the ShopCategories module
+ * Interaction for the ShopProductProperties module
  *
  * @author Frederik Heyninck <frederik@figure8.be>
  */
-jsBackend.shop_categories =
+jsBackend.shop_product_properties =
 {
     // constructor
     init: function()
@@ -19,4 +19,4 @@ jsBackend.shop_categories =
     }
 }
 
-$(jsBackend.shop_Categories.init);
+$(jsBackend.shop_product_properties.init);

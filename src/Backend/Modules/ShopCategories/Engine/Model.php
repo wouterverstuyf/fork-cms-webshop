@@ -98,20 +98,21 @@ class Model
         return (int) BackendModel::get('database')->insert('shop_categories', $item);
     }
 
-    public static function insertTreeNode($child, $parent)
+    public static function insertTreeNode($child, $parent, $sequence = 10000)
     {
         // build query
-        $query = 'INSERT INTO shop_categories_treepaths (ancestor, descendant, length)
-            SELECT t.ancestor, :child, t.length+1
+        $query = 'INSERT INTO shop_categories_treepaths (ancestor, descendant, length, sequence)
+            SELECT t.ancestor, :child, t.length+1, :sequence
             FROM shop_categories_treepaths AS t
             WHERE t.descendant = :parent
             UNION ALL
-            SELECT :child, :child, 0;';
+            SELECT :child, :child, 0, :sequence;';
 
         // set the query parameters for the insert-part
         $parameters = array();
         $parameters['child'] = (int) $child;
         $parameters['parent'] = (int) $parent;
+        $parameters['sequence'] = (int) $sequence;
 
         // execute the query
         return BackendModel::get('database')->execute($query, $parameters);
@@ -146,8 +147,6 @@ class Model
         return BackendModel::get('database')->getRecords($query);
     }
 
-    
-
     public static function getTreeByParent($ids)
     {   
 
@@ -161,7 +160,7 @@ class Model
         $query = 'SELECT d.id, d.child_of, c.name, d.sequence,
                    CONCAT(REPEAT("-- ", p.length), c.name) as hier,
                    p.length, p.ancestor, p.descendant,
-                   GROUP_CONCAT(DISTINCT crumbs.ancestor ORDER BY crumbs.ancestor) AS breadcrumbs
+                   GROUP_CONCAT(DISTINCT crumbs.length ORDER BY crumbs.length DESC) AS breadcrumbs
                     FROM shop_categories AS d
                     JOIN shop_categories_treepaths AS p ON d.id = p.descendant
                     JOIN shop_categories_treepaths AS crumbs ON crumbs.descendant = p.descendant
@@ -174,27 +173,7 @@ class Model
         return BackendModel::get('database')->getRecords($query, array(Language::getWorkingLanguage()));
     }
 
-     public static function getTreeByParentForDropdown($ids)
-    {   
-
-        $ids =  (array) $ids;
-        $ids = implode($ids, ',');
-
-        // @todo see http://stackoverflow.com/questions/8252323/mysql-closure-table-hierarchical-database-how-to-pull-information-out-in-the-c/8288201#8288201 for visual
-        // the whole tree
-        // http://karwin.blogspot.be/2010/03/rendering-trees-with-closure-tables.html
-        // build query
-        $query = 'SELECT d.id,
-                   CONCAT(REPEAT("-- ", p.length), c.name) as hier
-                    FROM shop_categories AS d
-                    JOIN shop_categories_treepaths AS p ON d.id = p.descendant
-                    LEFT JOIN shop_categories_content as c ON c.category_id = d.id
-                    WHERE p.ancestor IN (' . $ids . ') AND c.language = ?
-                    GROUP BY d.id';
-
-        // execute the query
-        return BackendModel::get('database')->getPairs($query, array(Language::getWorkingLanguage()));
-    }
+    
 
 
     public static function moveTreeNode($node, $to)
@@ -220,6 +199,20 @@ class Model
     {
         // build query
         $query = 'DELETE a FROM shop_categories_treepaths AS a
+            WHERE a.ancestor = :id OR  a.descendant = :id';
+
+        // set the query parameters for the insert-part
+        $parameters = array();
+        $parameters['id'] = (int) $id;
+
+
+        // execute the query
+        return BackendModel::get('database')->execute($query, $parameters);
+
+
+        /*
+        // build query
+        $query = 'DELETE a FROM shop_categories_treepaths AS a
             JOIN shop_categories_treepaths AS d ON a.descendant = d.descendant
             LEFT JOIN shop_categories_treepaths AS x
             ON x.ancestor = d.ancestor AND x.descendant = a.ancestor
@@ -231,6 +224,7 @@ class Model
 
         // execute the query
         return BackendModel::get('database')->execute($query, $parameters);
+        */
     }
 
     public static function insertContent(array $content)
@@ -241,8 +235,13 @@ class Model
     public static function getForDropdown()
     {
         $root = self::getRootNodes();
-        $tree = self::getTreeByParentForDropdown(array_keys($root));
-        return $tree;
+        $tree = self::getTreeByParent(array_keys($root));
+        $return = array();
+        foreach($tree as $t){
+            $return[$t['id']] = $t['hier'];
+        }
+
+        return $return;
 
         /*$query = 'SELECT a.id, c.name FROM shop_categories AS a
                     join shop_categories_treepaths AS b

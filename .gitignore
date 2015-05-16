@@ -16,6 +16,7 @@
 /css/
 
 /*
+!/README.MD
 !/src/
 /src/*
 
@@ -75,6 +76,12 @@
 
 !/src/Backend/Modules/ShopOrders/
 !/src/Backend/Modules/ShopOrders/*
+
+!/src/Frontend/Modules/ShopProductProperties/
+!/src/Frontend/Modules/ShopProductProperties/*
+
+!/src/Backend/Modules/ShopProductProperties/
+!/src/Backend/Modules/ShopProductProperties/*
 
 !/laravel/
 /laravel/*

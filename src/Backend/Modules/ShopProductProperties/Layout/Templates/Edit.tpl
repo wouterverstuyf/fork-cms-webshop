@@ -2,11 +2,11 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 
 <div class="pageTitle">
-    <h2>{$lblShopCategories|ucfirst}: {$lblAdd}</h2>
+    <h2>{$lblShopProductProperties|ucfirst}: {$lblEdit}</h2>
 </div>
 
-{form:add}
-
+{form:edit}
+  
     <table border="0" cellspacing="0" cellpadding="0" width="100%">
         <tr>
             <td id="leftColumn">
@@ -40,17 +40,6 @@
 
              <td id="sidebar">
 
-              <div class="box">
-                    <div class="heading">
-                        <h3>
-                            <label for="childOf">{$lblChildOf|ucfirst}</label>
-                        </h3>
-                    </div>
-                    <div class="options">
-                        {$ddmChildOf} {$ddmChildOfError}
-                    </div>
-                </div>
-
                 <div class="box">
                     <div class="heading">
                         <h3>
@@ -60,10 +49,36 @@
                     <div class="options">
                         {$fileImage} {$fileImageError}
                     </div>
+
+                    {option:record.image}
+
+                    <div class="options">
+                        <p>
+                            <img src="{$imageUrl}" style="max-width:200px;max-height:200px">
+                        </p>
+                    </div>
+
+                     <div class="options">
+                        <p>
+                            <label for="deleteImage">{$chkDeleteImage} {$Delete}</label>
+                        </p>
+                    </div>
+
+                    {/option:record.image}
                 </div>
 
-               
-              
+                <div class="box">
+                    <div class="heading">
+                        <h3>
+                            <label for="website">{$lblWebsite|ucfirst}</label>
+                        </h3>
+                    </div>
+                    <div class="options">
+                        {$txtWebsite} {$txtWebsiteError}
+                        <span class="helpTxt">{$msgHelpWebsite}</span>
+                    </div>
+                </div>
+
                 <div class="box">
                     <div class="heading">
                         <h3>{$lblStatus|ucfirst}</h3>
@@ -86,11 +101,20 @@
     </table>
 
     <div class="fullwidthOptions">
+        <a href="{$var|geturl:'delete'}&amp;id={$record.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+            <span>{$lblDelete|ucfirst}</span>
+        </a>
         <div class="buttonHolderRight">
-            <input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
+            <input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblSave|ucfirst}" />
         </div>
     </div>
-{/form:add}
+
+    <div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+        <p>
+            {$msgConfirmDelete|sprintf:'brand'}
+        </p>
+    </div>
+{/form:edit}
 
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}
