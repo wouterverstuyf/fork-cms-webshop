@@ -146,49 +146,7 @@ class Model
         return BackendModel::get('database')->getRecords($query);
     }
 
-    // not needed, use getTreeByParent()
-    public static function getTree()
-    {   
-        // @todo see http://stackoverflow.com/questions/8252323/mysql-closure-table-hierarchical-database-how-to-pull-information-out-in-the-c/8288201#8288201 for visual
-        // the whole tree
-        // http://karwin.blogspot.be/2010/03/rendering-trees-with-closure-tables.html
-        // build query
-        $query = 'SELECT a.*, c.name FROM shop_categories AS a
-                    join shop_categories_treepaths AS b
-                    on a.id=b.descendant
-                    LEFT JOIN shop_categories_content as c ON c.category_id = a.id
-                    where ancestor in (
-                    SELECT c.ancestor FROM shop_categories_treepaths AS c
-                    LEFT OUTER JOIN shop_categories_treepaths AS anc
-                    ON anc.descendant = c.descendant AND anc.ancestor <> c.ancestor
-                    WHERE anc.ancestor IS NULL) AND c.language = ?';
-
-        // execute the query
-        return BackendModel::get('database')->getRecords($query, array(Language::getWorkingLanguage()));
-    }
-
-    // not needed, use getTreeByParent()
-    public static function getTreeStartByRoot()
-    {   
-        // @todo see http://stackoverflow.com/questions/8252323/mysql-closure-table-hierarchical-database-how-to-pull-information-out-in-the-c/8288201#8288201 for visual
-        // the whole tree
-        // http://karwin.blogspot.be/2010/03/rendering-trees-with-closure-tables.html
-        // build query
-        $query = 'SELECT d.id, d.child_of,
-                   CONCAT(REPEAT("-- ", p.length), c.name) as hier,
-                   p.length, p.ancestor, p.descendant,
-                   GROUP_CONCAT(DISTINCT crumbs.ancestor ORDER BY crumbs.ancestor) AS breadcrumbs
-                    FROM shop_categories AS d
-                    JOIN shop_categories_treepaths AS p ON d.id = p.descendant
-                    JOIN shop_categories_treepaths AS crumbs ON crumbs.descendant = p.descendant
-                    LEFT JOIN shop_categories_content as c ON c.category_id = d.id
-                    WHERE d.child_of IS NULL AND c.language = ?
-                    GROUP BY d.id
-                    ORDER BY breadcrumbs';
-
-        // execute the query
-        return BackendModel::get('database')->getRecords($query, array(Language::getWorkingLanguage()));
-    }
+    
 
     public static function getTreeByParent($ids)
     {   
