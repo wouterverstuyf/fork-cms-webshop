@@ -3,102 +3,52 @@
 
 <div class="pageTitle">
     <h2>{$lblShopProductProperties|ucfirst}: {$lblEdit}</h2>
+    <div class="buttonHolderRight">
+        <a href="{$var|geturl:'add_value'}&amp;id={$record.id}"  class=" button  icon iconAdd">
+            <span>{$lblAddValue|ucfirst}</span>
+        </a>
+    </div>
 </div>
 
 {form:edit}
   
-    <table border="0" cellspacing="0" cellpadding="0" width="100%">
-        <tr>
-            <td id="leftColumn">
+     <div class="tabs">
+        <ul>
+            <li><a href="#tabValues">{$lblValues|ucfirst}</a></li>
+           {iteration:languages}<li><a href="#tab{$languages.abbreviation|uppercase}">{$languages.label|ucfirst}</a></li>{/iteration:languages}
+        </ul>
 
-                 <div class="tabs">
-                    <ul>
-                       {iteration:languages}<li><a href="#tab{$languages.abbreviation|uppercase}">{$languages.label|ucfirst}</a></li>{/iteration:languages}
-                    </ul>
+        <div id="tabValues">
 
-                    {iteration:languages}
-                        <div id="tab{$languages.abbreviation|uppercase}">
+            {option:dataGrid}
+            <div class="dataGridHolder">
+                {$dataGrid}
+            </div>
+            {/option:dataGrid}
 
-                            <p>
-                                <label for="name{$languages.abbreviation|ucfirst}">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-                                {$languages.txtName} {$languages.txtNameError}
-                            </p>
+            {option:!dataGrid}
+                {$msgNoValues}
+            {/option:!dataGrid}
+           
+        </div>
 
-                            <div class="box">
-                                <div class="heading">
-                                    <h3>{$lblDescription|ucfirst}</h3>
-                                </div>
-                                <div class="optionsRTE">
-                                    {$languages.txtDescription} {$languages.txtDescriptionError}
-                                </div>
-                            </div>
+        {iteration:languages}
+            <div id="tab{$languages.abbreviation|uppercase}">
 
-                        </div>
-                    {/iteration:languages}
-                 </div>
-             </td>
+                <p>
+                    <label for="name{$languages.abbreviation|ucfirst}">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+                    {$languages.txtName} {$languages.txtNameError}
+                </p>
 
-             <td id="sidebar">
+            </div>
+        {/iteration:languages}
 
-                <div class="box">
-                    <div class="heading">
-                        <h3>
-                            <label for="image">{$lblImage|ucfirst}</label>
-                        </h3>
-                    </div>
-                    <div class="options">
-                        {$fileImage} {$fileImageError}
-                    </div>
 
-                    {option:record.image}
+     </div>
 
-                    <div class="options">
-                        <p>
-                            <img src="{$imageUrl}" style="max-width:200px;max-height:200px">
-                        </p>
-                    </div>
+     
 
-                     <div class="options">
-                        <p>
-                            <label for="deleteImage">{$chkDeleteImage} {$Delete}</label>
-                        </p>
-                    </div>
 
-                    {/option:record.image}
-                </div>
-
-                <div class="box">
-                    <div class="heading">
-                        <h3>
-                            <label for="website">{$lblWebsite|ucfirst}</label>
-                        </h3>
-                    </div>
-                    <div class="options">
-                        {$txtWebsite} {$txtWebsiteError}
-                        <span class="helpTxt">{$msgHelpWebsite}</span>
-                    </div>
-                </div>
-
-                <div class="box">
-                    <div class="heading">
-                        <h3>{$lblStatus|ucfirst}</h3>
-                    </div>
-
-                    <div class="options">
-                        <ul class="inputList p0">
-                            {iteration:hidden}
-                            <li>
-                                {$hidden.rbtHidden}
-                                <label for="{$hidden.id}">{$hidden.label}</label>
-                            </li>
-                            {/iteration:hidden}
-                        </ul>
-                    </div>
-                </div>
-
-            </td>
-        </tr>
-    </table>
 
     <div class="fullwidthOptions">
         <a href="{$var|geturl:'delete'}&amp;id={$record.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">

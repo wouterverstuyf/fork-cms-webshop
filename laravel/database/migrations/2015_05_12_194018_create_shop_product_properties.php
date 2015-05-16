@@ -21,10 +21,34 @@ class CreateShopProductProperties extends Migration {
 
 		Schema::create('shop_product_properties_content', function($table)
 		{
-			$table->bigInteger('product_property_id');
-			$table->index('product_property_id');
+			$table->integer('property_id');
+			$table->index('property_id');
 			$table->char('language', 4);
-			$table->char('name', 255);
+			$table->char('name', 50);
+		});
+
+		Schema::create('shop_product_properties_values', function($table)
+		{
+			$table->increments('id');
+			$table->integer('property_id');
+			$table->index('property_id');
+			$table->integer('sequence')->default(0);
+
+		});
+
+		Schema::create('shop_product_properties_values_content', function($table)
+		{
+			$table->increments('id');
+
+			$table->char('language', 4);
+			$table->char('name', 50);
+
+			$table->integer('property_id');
+			$table->index('property_id');
+
+			$table->integer('value_id');
+			$table->index('value_id');
+
 		});
 	}
 
@@ -37,6 +61,8 @@ class CreateShopProductProperties extends Migration {
 	{
 		Schema::dropIfExists('shop_product_properties');
 		Schema::dropIfExists('shop_product_properties_content');
+		Schema::dropIfExists('shop_product_properties_values');
+		Schema::dropIfExists('shop_product_properties_values_content');
 	}
 
 }

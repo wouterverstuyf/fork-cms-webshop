@@ -11,7 +11,7 @@ use Backend\Modules\ShopProductProperties\Engine\Model as BackendShopProductProp
  *
  * @author Frederik Heyninck <frederik@figure8.be>
  */
-class Delete extends ActionDelete
+class DeleteValue extends ActionDelete
 {
     /**
      * Execute the action
@@ -21,11 +21,11 @@ class Delete extends ActionDelete
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if ($this->id !== null && BackendShopProductPropertiesModel::exists($this->id)) {
+        if ($this->id !== null && BackendShopProductPropertiesModel::existsValue($this->id)) {
             parent::execute();
-            $this->record = (array) BackendShopProductPropertiesModel::get($this->id);
+            $this->record = (array) BackendShopProductPropertiesModel::getValue($this->id);
 
-            BackendShopProductPropertiesModel::delete($this->id);
+            BackendShopProductPropertiesModel::deleteValue($this->id);
 
             Model::triggerEvent(
                 $this->getModule(), 'after_delete',
@@ -33,7 +33,7 @@ class Delete extends ActionDelete
             );
 
             $this->redirect(
-                Model::createURLForAction('Index') . '&report=deleted'
+                Model::createURLForAction('Edit') . '&report=deleted&id=' .  $this->record['property_id'] 
             );
         }
         else $this->redirect(Model::createURLForAction('Index') . '&error=non-existing');

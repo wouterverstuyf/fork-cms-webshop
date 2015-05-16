@@ -1,5 +1,6 @@
 ## Todo
 
-1. Check delete for category
-2. Check sorting for categories
-3. Store subcategories count + product count?
+- Check delete for category
+- Add show subcategories button in grid
+- Check sorting for categories
+- Store subcategories count + product count?

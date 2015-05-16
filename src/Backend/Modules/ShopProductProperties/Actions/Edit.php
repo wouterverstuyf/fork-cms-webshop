@@ -8,7 +8,8 @@ use Backend\Core\Engine\Language;
 use Backend\Core\Engine\Model;
 use Backend\Modules\ShopProductProperties\Engine\Model as BackendShopProductPropertiesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
-
+use Backend\Core\Engine\DataGridArray;
+use Backend\Core\Engine\Authentication;
 use Backend\Modules\ShopBase\Engine\Helper as ShopHelper;
 
 /**
@@ -28,6 +29,7 @@ class Edit extends ActionEdit
         $this->languages = ShopHelper::getLanguages();
 
         $this->loadData();
+        $this->loadDataGrid();
         $this->loadForm();
         $this->validateForm();
 
@@ -48,8 +50,9 @@ class Edit extends ActionEdit
         }
 
         $this->record = BackendShopProductPropertiesModel::get($this->id);
+        $this->valuesDataGrid = BackendShopProductPropertiesModel::getValuesForDatagrid($this->id);
 
-       // \Spoon::dump($this->record);
+       
     }
 
     /**
@@ -60,20 +63,9 @@ class Edit extends ActionEdit
         // create form
         $this->frm = new Form('edit');
 
-        $this->frm->addText('website', $this->record['website']);
-        $this->frm->addImage('image');
-        $this->frm->addCheckbox('delete_image');
-
-        // set hidden values
-        $rbtHiddenValues[] = array('label' => Language::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y');
-        $rbtHiddenValues[] = array('label' => Language::lbl('Published'), 'value' => 'N');
-
-        $this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
-
         foreach($this->languages as &$language)
         {
             $language['formElements']['txtName'] = $this->frm->addText('name_'. $language['abbreviation'], isset($this->record['content'][$language['abbreviation']]['name']) ? $this->record['content'][$language['abbreviation']]['name'] : '', null, 'inputText title');
-            $language['formElements']['txtDescription'] = $this->frm->addEditor('description_'. $language['abbreviation'], isset($this->record['content'][$language['abbreviation']]['description']) ? $this->record['content'][$language['abbreviation']]['description'] : '');
         }
     }
 
@@ -86,7 +78,48 @@ class Edit extends ActionEdit
 
         $this->tpl->assign('languages', $this->languages);
         $this->tpl->assign('record', $this->record);
-        $this->tpl->assign('imageUrl', ShopHelper::getImageUrl($this->record['image'], $this->getModule()));
+        // parse the dataGrid if there are results
+        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
+    }
+
+
+    /**
+     * Load the dataGrid
+     */
+    protected function loadDataGrid()
+    {
+        $this->dataGrid = new DataGridArray($this->valuesDataGrid);
+
+        $this->dataGrid->addColumn(
+            'delete', null, Language::lbl('Delete'),
+            Model::createURLForAction('DeleteValue') . '&amp;id=[id]',
+            Language::lbl('Delete')
+        );
+
+        $this->dataGrid->enableSequenceByDragAndDrop();
+
+        //$this->dataGrid->setColumnsHidden(array('value_id'));
+        /*$this->dataGrid->setColumnURL(
+            'name', Model::createURLForAction('Delete') . '&amp;id=[id]'
+        );*/
+
+
+            // set column attributes for each language
+            foreach ($this->languages as $lang) {
+
+                //$this->dataGrid->setColumnsHidden('value_content_id_' . $lang['abbreviation']);
+                // add a class for the inline edit
+                $this->dataGrid->setColumnAttributes($lang['abbreviation'], array('class' => 'translationValue'));
+                // add attributes, so the inline editing has all the needed data
+                $this->dataGrid->setColumnAttributes(
+                    $lang['abbreviation'],
+                    array(
+                        'data-id' => '{language: \'' . $lang['abbreviation'] . '\', value_id:\'[id]\'}'
+                    )
+                );
+                
+            }
+        
     }
 
     /**
@@ -100,51 +133,26 @@ class Edit extends ActionEdit
             // validation
             $fields = $this->frm->getFields();
 
-            if($fields['website']->isFilled()) $fields['website']->isURL(Language::err('InvalidURL'));
-
-            ShopHelper::validateImage($this->frm, 'image');
-
             foreach($this->languages as $language)
             {
                  $this->frm->getField('name_'. $language['abbreviation'])->isFilled(Language::getError('FieldIsRequired'));
             }
 
-
             if ($this->frm->isCorrect()) {
                 $item['id'] = $this->id;
-
-                $item['website'] = $fields['website']->getValue();
-                $item['hidden'] = $fields['hidden']->getValue();
-
-                $imagePath = ShopHelper::generateFolders($this->getModule());
-
-                if($fields['delete_image']->isChecked()){
-                    $item['image'] = NULL;
-                    Model::deleteThumbnails(FRONTEND_FILES_PATH . '/' . $this->getModule() . '/image',  $this->record['image']);
-                }
-
-                // image provided?
-                if ($fields['image']->isFilled()) {
-                    // build the image name
-                    $item['image'] = uniqid() . '.' . $fields['image']->getExtension();
-
-                    // upload the image & generate thumbnails
-                    $fields['image']->generateThumbnails($imagePath, $item['image']);
-                }
 
                 $content = array();
 
                 foreach($this->languages as $language)
                 {
-                    $specific['brand_id'] = $item['id'];
+                    $specific['property_id'] = $item['id'];
                     $specific['language'] = $language['abbreviation'];
                     $specific['name'] = $this->frm->getField('name_'. $language['abbreviation'])->getValue();
-                    $specific['description'] = ($this->frm->getField('description_'. $language['abbreviation'])->isFilled()) ? $this->frm->getField('description_'. $language['abbreviation'])->getValue() : null;
                     $content[$language['abbreviation']] = $specific;
 
                      BackendSearchModel::saveIndex(
                         $this->getModule(), $item['id'],
-                        array('name' => $specific['name'], 'website' => $item['website'], 'description' => $specific['description']),
+                        array('name' => $specific['name']),
                         $language['abbreviation']
                     );
                 }

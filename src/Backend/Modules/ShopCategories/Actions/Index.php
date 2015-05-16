@@ -30,7 +30,7 @@ class Index extends ActionIndex
         $this->parse();
         $this->display();
 
-        \Spoon::dump(BackendShopCategoriesModel::getTreeByParent(array(2, 20)));
+        //\Spoon::dump(BackendShopCategoriesModel::getTreeByParent(array(2, 20)));
     }
 
     /**
