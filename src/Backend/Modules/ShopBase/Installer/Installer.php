@@ -23,8 +23,5 @@ class Installer extends ModuleInstaller
         $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
 
         $this->setModuleRights(1, 'ShopBase');
-
-     
-
     }
 }

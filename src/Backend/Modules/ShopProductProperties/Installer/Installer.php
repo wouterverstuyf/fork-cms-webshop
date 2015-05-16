@@ -29,6 +29,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, 'ShopProductProperties', 'Edit');
         $this->setActionRights(1, 'ShopProductProperties', 'Delete');
         $this->setActionRights(1, 'ShopProductProperties', 'AddValue');
+        $this->setActionRights(1, 'ShopProductProperties', 'DeleteValue');
 
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $navigationModulesId = $this->setNavigation($navigationModulesId, 'Products');
