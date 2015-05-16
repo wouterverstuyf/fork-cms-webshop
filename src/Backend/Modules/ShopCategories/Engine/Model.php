@@ -129,7 +129,7 @@ class Model
             WHERE anc.ancestor IS NULL';
 
         // execute the query
-        return BackendModel::get('database')->getRecords($query);
+        return BackendModel::get('database')->getRecords($query, null, 'descendant');
     }
 
     public static function getLeaveNodes()
@@ -146,14 +146,15 @@ class Model
         return BackendModel::get('database')->getRecords($query);
     }
 
+    // not needed, use getTreeByParent()
     public static function getTree()
     {   
         // @todo see http://stackoverflow.com/questions/8252323/mysql-closure-table-hierarchical-database-how-to-pull-information-out-in-the-c/8288201#8288201 for visual
         // the whole tree
         // http://karwin.blogspot.be/2010/03/rendering-trees-with-closure-tables.html
         // build query
-        $query = 'SELECT *, c.name FROM length a
-                    join shop_categories_treepaths b
+        $query = 'SELECT a.*, c.name FROM shop_categories AS a
+                    join shop_categories_treepaths AS b
                     on a.id=b.descendant
                     LEFT JOIN shop_categories_content as c ON c.category_id = a.id
                     where ancestor in (
@@ -166,6 +167,7 @@ class Model
         return BackendModel::get('database')->getRecords($query, array(Language::getWorkingLanguage()));
     }
 
+    // not needed, use getTreeByParent()
     public static function getTreeStartByRoot()
     {   
         // @todo see http://stackoverflow.com/questions/8252323/mysql-closure-table-hierarchical-database-how-to-pull-information-out-in-the-c/8288201#8288201 for visual
@@ -188,13 +190,17 @@ class Model
         return BackendModel::get('database')->getRecords($query, array(Language::getWorkingLanguage()));
     }
 
-    public static function getTreeByParent($id)
+    public static function getTreeByParent($ids)
     {   
+
+        $ids =  (array) $ids;
+        $ids = implode($ids, ',');
+
         // @todo see http://stackoverflow.com/questions/8252323/mysql-closure-table-hierarchical-database-how-to-pull-information-out-in-the-c/8288201#8288201 for visual
         // the whole tree
         // http://karwin.blogspot.be/2010/03/rendering-trees-with-closure-tables.html
         // build query
-        $query = 'SELECT d.id, d.child_of, c.name,
+        $query = 'SELECT d.id, d.child_of, c.name, d.sequence,
                    CONCAT(REPEAT("-- ", p.length), c.name) as hier,
                    p.length, p.ancestor, p.descendant,
                    GROUP_CONCAT(DISTINCT crumbs.ancestor ORDER BY crumbs.ancestor) AS breadcrumbs
@@ -202,16 +208,38 @@ class Model
                     JOIN shop_categories_treepaths AS p ON d.id = p.descendant
                     JOIN shop_categories_treepaths AS crumbs ON crumbs.descendant = p.descendant
                     LEFT JOIN shop_categories_content as c ON c.category_id = d.id
-                    WHERE p.ancestor = ? AND c.language = ?
+                    WHERE p.ancestor IN (' . $ids . ') AND c.language = ?
                     GROUP BY d.id
                     ORDER BY breadcrumbs';
 
         // execute the query
-        return BackendModel::get('database')->getRecords($query, array((int) $id, Language::getWorkingLanguage()));
+        return BackendModel::get('database')->getRecords($query, array(Language::getWorkingLanguage()));
+    }
+
+     public static function getTreeByParentForDropdown($ids)
+    {   
+
+        $ids =  (array) $ids;
+        $ids = implode($ids, ',');
+
+        // @todo see http://stackoverflow.com/questions/8252323/mysql-closure-table-hierarchical-database-how-to-pull-information-out-in-the-c/8288201#8288201 for visual
+        // the whole tree
+        // http://karwin.blogspot.be/2010/03/rendering-trees-with-closure-tables.html
+        // build query
+        $query = 'SELECT d.id,
+                   CONCAT(REPEAT("-- ", p.length), c.name) as hier
+                    FROM shop_categories AS d
+                    JOIN shop_categories_treepaths AS p ON d.id = p.descendant
+                    LEFT JOIN shop_categories_content as c ON c.category_id = d.id
+                    WHERE p.ancestor IN (' . $ids . ') AND c.language = ?
+                    GROUP BY d.id';
+
+        // execute the query
+        return BackendModel::get('database')->getPairs($query, array(Language::getWorkingLanguage()));
     }
 
 
-    public static function moverTreeNode($node, $to)
+    public static function moveTreeNode($node, $to)
     {
         // build query
         $query = 'INSERT INTO shop_categories_treepaths (ancestor, descendant, length)
@@ -254,7 +282,11 @@ class Model
 
     public static function getForDropdown()
     {
-        $query = 'SELECT a.id, c.name FROM shop_categories AS a
+        $root = self::getRootNodes();
+        $tree = self::getTreeByParentForDropdown(array_keys($root));
+        return $tree;
+
+        /*$query = 'SELECT a.id, c.name FROM shop_categories AS a
                     join shop_categories_treepaths AS b
                     on a.id=b.descendant
                     LEFT JOIN shop_categories_content as c ON c.category_id = a.id
@@ -265,7 +297,7 @@ class Model
                     WHERE anc.ancestor IS NULL) AND c.language = ?';
 
         // execute the query
-        return BackendModel::get('database')->getPairs($query, array(Language::getWorkingLanguage()));
+        return BackendModel::get('database')->getPairs($query, array(Language::getWorkingLanguage()));*/
     }
 
     /**
