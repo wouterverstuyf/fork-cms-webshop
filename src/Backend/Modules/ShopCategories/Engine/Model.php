@@ -22,7 +22,7 @@ class Model
     public static function delete($id)
     {
         BackendModel::get('database')->delete('shop_categories', 'id = ?', (int) $id);
-        BackendModel::get('database')->delete('shop_categories_content', 'category_id = ?', (int) $id);
+        BackendModel::get('database')->delete('shop_category_content', 'category_id = ?', (int) $id);
         BackendModel::get('database')->update('shop_products', array('category_id' => NULL), 'category_id = ?', array($id));
     }
 
@@ -75,7 +75,7 @@ class Model
 
         // data found
         $return['content'] = (array) $db->getRecords(
-            'SELECT i.* FROM shop_categories_content AS i
+            'SELECT i.* FROM shop_category_content AS i
             WHERE i.category_id = ?',
             array((int) $id), 'language');
 
@@ -164,7 +164,7 @@ class Model
                     FROM shop_categories AS d
                     JOIN shop_categories_treepaths AS p ON d.id = p.descendant
                     JOIN shop_categories_treepaths AS crumbs ON crumbs.descendant = p.descendant
-                    LEFT JOIN shop_categories_content as c ON c.category_id = d.id
+                    LEFT JOIN shop_category_content as c ON c.category_id = d.id
                     WHERE p.ancestor IN (' . $ids . ') AND c.language = ?
                     GROUP BY d.id
                     ORDER BY breadcrumbs';
@@ -229,7 +229,7 @@ class Model
 
     public static function insertContent(array $content)
     {
-        BackendModel::get('database')->insert('shop_categories_content', $content);
+        BackendModel::get('database')->insert('shop_category_content', $content);
     }
 
     public static function getForDropdown()
@@ -246,7 +246,7 @@ class Model
         /*$query = 'SELECT a.id, c.name FROM shop_categories AS a
                     join shop_categories_treepaths AS b
                     on a.id=b.descendant
-                    LEFT JOIN shop_categories_content as c ON c.category_id = a.id
+                    LEFT JOIN shop_category_content as c ON c.category_id = a.id
                     where ancestor in (
                     SELECT c.ancestor FROM shop_categories_treepaths AS c
                     LEFT OUTER JOIN shop_categories_treepaths AS anc
@@ -276,7 +276,7 @@ class Model
         $db = BackendModel::get('database');
         foreach($content as $language => $row)
         {
-            $db->update('shop_categories_content', $row, 'category_id = ? AND language = ?', array($id, $language));
+            $db->update('shop_category_content', $row, 'category_id = ? AND language = ?', array($id, $language));
         }
     }
 }

@@ -45,7 +45,7 @@ class Index extends ActionIndex
        
         $query = 'SELECT i.id, c.name, i.sequence
          FROM shop_categories AS i
-         INNER JOIN shop_categories_content as c on i.id = c.category_id
+         INNER JOIN shop_category_content as c on i.id = c.category_id
          WHERE 1';
 
         $query .= ' AND c.language = ?';

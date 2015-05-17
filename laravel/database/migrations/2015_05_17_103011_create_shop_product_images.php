@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateShopProductsContent extends Migration {
+class CreateShopProductImages extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,14 +12,20 @@ class CreateShopProductsContent extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('shop_product_content', function($table)
+		Schema::create('shop_product_images', function($table)
 		{
+			$table->bigIncrements('id');
+
+			$table->bigInteger('variant_id')->nullable();
+			$table->index('variant_id');
+
 			$table->bigInteger('product_id');
 			$table->index('product_id');
-			$table->string('language', 4);
-			$table->string('name', 255);
-			$table->string('url', 255);
-			$table->text('description')->nullable();
+
+			$table->integer('sequence')->default(0);
+
+			$table->string('image', 255);
+
 		});
 	}
 
@@ -30,7 +36,7 @@ class CreateShopProductsContent extends Migration {
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('shop_product_content');
+		Schema::dropIfExists('shop_product_images');
 	}
 
 }

@@ -15,8 +15,8 @@ class CreateShopDiscountCodes extends Migration {
 		Schema::create('shop_discount_codes', function($table)
 		{
 			$table->increments('id');
-			$table->char('name', 255);
-			$table->char('code', 50)->unique();
+			$table->string('name', 255);
+			$table->string('code', 50)->unique();
 			$table->float('discount')->nullable();
 			$table->integer('limit')->nullable();
 			$table->integer('used_count')->default(0);

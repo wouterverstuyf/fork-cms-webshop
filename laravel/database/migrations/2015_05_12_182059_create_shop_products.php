@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateShopProductsTable extends Migration {
+class CreateShopProducts extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -22,15 +22,21 @@ class CreateShopProductsTable extends Migration {
 			$table->boolean('allow_purchase_when_out_of_stock');
 
 			$table->boolean('featured');
-			$table->boolean('has_variations');	
+			$table->boolean('has_variations');
+
+			// this is used to store the lowest variant price or price
+			$table->float('search_price_incl');
+			$table->float('search_price_excl');
 
 			$table->float('price_incl');
 			$table->float('price_excl');
 			$table->float('price_vat');
+			$table->enum('price_is_incl_vat', ['N', 'Y'])->default('Y');
 
 			$table->float('promo_price_incl')->nullable();
 			$table->float('promo_price_excl')->nullable();
 			$table->float('promo_price_vat')->nullable();
+			$table->enum('promo_price_is_incl_vat', ['N', 'Y'])->default('Y');
 			$table->dateTime('promo_from')->nullable();
 			$table->dateTime('promo_until')->nullable();
 
@@ -38,7 +44,7 @@ class CreateShopProductsTable extends Migration {
 			$table->dateTime('new_until')->nullable();
 
 			$table->enum('hidden', ['N', 'Y'])->default('N');
-			$table->timestamp('publish_on');
+			$table->dateTime('publish_on');
 
 			$table->integer('brand_id')->nullable();
 			$table->integer('user_id');
@@ -50,9 +56,9 @@ class CreateShopProductsTable extends Migration {
 
 			$table->integer('bought_count')->default(0);
 
-			$table->char('image', 255)->nullable();
-			$table->char('sku', 255)->nullable();
-			$table->char('barcode', 255)->nullable();
+			$table->string('image', 255)->nullable();
+			$table->string('sku', 255)->nullable();
+			$table->string('barcode', 255)->nullable();
 
 			$table->boolean('deleted');
 			$table->timestamp('deleted_on')->nullable();

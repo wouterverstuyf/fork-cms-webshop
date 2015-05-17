@@ -34,15 +34,15 @@ class Model
      public static function deleteValue($id)
     {
         // @todo deleted linked product variants on this value
-        BackendModel::get('database')->delete('shop_product_properties_values', 'id = ?', (int) $id);
-        BackendModel::get('database')->delete('shop_product_properties_values_content', 'value_id = ?', (int) $id);
+        BackendModel::get('database')->delete('shop_product_property_values', 'id = ?', (int) $id);
+        BackendModel::get('database')->delete('shop_product_property_value_content', 'value_id = ?', (int) $id);
     }
 
     public static function getMaximumSequenceForValue()
     {
         return (int) BackendModel::get('database')->getVar(
             'SELECT MAX(i.sequence)
-             FROM shop_product_properties_values AS i'
+             FROM shop_product_property_values AS i'
         );
     }
 
@@ -50,7 +50,7 @@ class Model
 
         $item['property_id'] = (int) $id;
         $item['sequence'] = self::getMaximumSequenceForValue();
-        return (int) BackendModel::get('database')->insert('shop_product_properties_values', $item);
+        return (int) BackendModel::get('database')->insert('shop_product_property_values', $item);
     }
 
     public static function getValuesForDatagrid($id){
@@ -58,7 +58,7 @@ class Model
 
         $values =  (array) $db->getRecords(
             'SELECT i.id, i.sequence
-             FROM shop_product_properties_values AS i
+             FROM shop_product_property_values AS i
              WHERE i.property_id = ?
              ORDER BY i.sequence',
             array((int) $id)
@@ -72,7 +72,7 @@ class Model
 
             $content =  (array) $db->getRecords(
                 'SELECT i.language, i.name, i.id
-                 FROM shop_product_properties_values_content AS i
+                 FROM shop_product_property_value_content AS i
                  WHERE i.value_id = ?',
                 array((int) $value['id']), 'language'
             );
@@ -114,7 +114,7 @@ class Model
     {
         return (bool) BackendModel::get('database')->getVar(
             'SELECT 1
-             FROM shop_product_properties_values AS i
+             FROM shop_product_property_values AS i
              WHERE i.id = ?
              LIMIT 1',
             array((int) $id)
@@ -154,14 +154,14 @@ class Model
 
         $return =  (array) $db->getRecord(
             'SELECT i.*
-             FROM shop_product_properties_values AS i
+             FROM shop_product_property_values AS i
              WHERE i.id = ?',
             array((int) $id)
         );
 
         // data found
         $return['content'] = (array) $db->getRecords(
-            'SELECT i.* FROM shop_product_properties_values_content AS i
+            'SELECT i.* FROM shop_product_property_value_content AS i
             WHERE i.value_id = ?',
             array((int) $id), 'language');
 
@@ -216,7 +216,7 @@ class Model
     {
 
         BackendModel::get('database')->update(
-            'shop_product_properties_values', $item, 'id = ?', (int) $item['id']
+            'shop_product_property_values', $item, 'id = ?', (int) $item['id']
         );
     }
 }

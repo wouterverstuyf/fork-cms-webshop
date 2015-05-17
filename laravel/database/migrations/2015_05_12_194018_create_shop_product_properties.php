@@ -19,15 +19,16 @@ class CreateShopProductProperties extends Migration {
 			$table->timestamp('edited_on')->nullable();
 		});
 
-		Schema::create('shop_product_properties_content', function($table)
+		Schema::create('shop_product_property_content', function($table)
 		{
 			$table->integer('property_id');
 			$table->index('property_id');
-			$table->char('language', 4);
-			$table->char('name', 50);
+			$table->string('language', 4);
+			$table->string('name', 50);
+			$table->string('url', 255);
 		});
 
-		Schema::create('shop_product_properties_values', function($table)
+		Schema::create('shop_product_property_values', function($table)
 		{
 			$table->increments('id');
 			$table->integer('property_id');
@@ -36,12 +37,12 @@ class CreateShopProductProperties extends Migration {
 
 		});
 
-		Schema::create('shop_product_properties_values_content', function($table)
+		Schema::create('shop_product_property_value_content', function($table)
 		{
 			$table->increments('id');
 
-			$table->char('language', 4);
-			$table->char('name', 50);
+			$table->string('language', 4);
+			$table->string('name', 50);
 
 			$table->integer('property_id');
 			$table->index('property_id');
@@ -60,9 +61,9 @@ class CreateShopProductProperties extends Migration {
 	public function down()
 	{
 		Schema::dropIfExists('shop_product_properties');
-		Schema::dropIfExists('shop_product_properties_content');
-		Schema::dropIfExists('shop_product_properties_values');
-		Schema::dropIfExists('shop_product_properties_values_content');
+		Schema::dropIfExists('shop_product_property_content');
+		Schema::dropIfExists('shop_product_property_values');
+		Schema::dropIfExists('shop_product_property_value_content');
 	}
 
 }
