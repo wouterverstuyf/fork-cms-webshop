@@ -6,7 +6,7 @@
 		<minimum_version>versionname</minimum_version>
 	</requirements>
 	<description>
-		<![CDATA[This module contains shared code.]]>
+		<![CDATA[This shop base module.]]>
 	</description>
 	<authors>
 		<author>
