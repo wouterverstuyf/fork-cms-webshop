@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+	<Backend>
+		<ShopProducts>
+			<item type="label" name="AddShopProducts">
+				<translation language="nl"><![CDATA[product toevoegen]]></translation>
+				<translation language="en"><![CDATA[add product]]></translation>
+			</item>
+			<item type="label" name="ShopProducts">
+				<translation language="nl"><![CDATA[productsen]]></translation>
+				<translation language="en"><![CDATA[products]]></translation>
+			</item>
+			<item type="label" name="ShopProductsDetail">
+				<translation language="nl"><![CDATA[product detail]]></translation>
+				<translation language="en"><![CDATA[product detail]]></translation>
+			</item>
+		
+		</ShopProducts>
+		<Core>
+			<item type="label" name="ShopProducts">
+				<translation language="nl"><![CDATA[producten]]></translation>
+				<translation language="en"><![CDATA[products]]></translation>
+			</item>
+			<item type="label" name="Products">
+				<translation language="nl"><![CDATA[producten]]></translation>
+				<translation language="en"><![CDATA[products]]></translation>
+			</item>
+		</Core>
+	</Backend>
+	<Frontend>
+		<core>
+		</core>
+	</Frontend>
+</locale>

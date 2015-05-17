@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Modules\ShopBrands\Engine;
+namespace Backend\Modules\ShopProducts\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language;
 
 /**
- * In this file we store all generic functions that we will be using in the ShopBrands module
+ * In this file we store all generic functions that we will be using in the ShopProducts module
  *
  * @author Frederik Heyninck <frederik@figure8.be>
  */
@@ -14,8 +14,8 @@ class Model
 {
     const QRY_DATAGRID_BROWSE =
         'SELECT i.id, c.name, i.website
-         FROM shop_brands AS i
-         INNER JOIN shop_brand_content as c  on i.id = c.brand_id
+         FROM shop_products AS i
+         INNER JOIN shop_product_content as c  on i.id = c.brand_id
          WHERE c.language = ?';
 
     /**
@@ -25,8 +25,8 @@ class Model
      */
     public static function delete($id)
     {
-        BackendModel::get('database')->delete('shop_brands', 'id = ?', (int) $id);
-        BackendModel::get('database')->delete('shop_brand_content', 'brand_id = ?', (int) $id);
+        BackendModel::get('database')->delete('shop_products', 'id = ?', (int) $id);
+        BackendModel::get('database')->delete('shop_product_content', 'brand_id = ?', (int) $id);
         BackendModel::get('database')->update('shop_products', array('brand_id' => NULL), 'brand_id = ?', array($id));
     }
 
@@ -40,7 +40,7 @@ class Model
     {
         return (bool) BackendModel::get('database')->getVar(
             'SELECT 1
-             FROM shop_brands AS i
+             FROM shop_products AS i
              WHERE i.id = ?
              LIMIT 1',
             array((int) $id)
@@ -59,14 +59,14 @@ class Model
 
         $return =  (array) $db->getRecord(
             'SELECT i.*
-             FROM shop_brands AS i
+             FROM shop_products AS i
              WHERE i.id = ?',
             array((int) $id)
         );
 
         // data found
         $return['content'] = (array) $db->getRecords(
-            'SELECT i.* FROM shop_brand_content AS i
+            'SELECT i.* FROM shop_product_content AS i
             WHERE i.brand_id = ?',
             array((int) $id), 'language');
 
@@ -86,12 +86,12 @@ class Model
         $item['created_on'] = BackendModel::getUTCDate();
         $item['edited_on'] = BackendModel::getUTCDate();
 
-        return (int) BackendModel::get('database')->insert('shop_brands', $item);
+        return (int) BackendModel::get('database')->insert('shop_products', $item);
     }
 
     public static function insertContent(array $content)
     {
-        BackendModel::get('database')->insert('shop_brand_content', $content);
+        BackendModel::get('database')->insert('shop_product_content', $content);
     }
 
     /**
@@ -104,7 +104,7 @@ class Model
         $item['edited_on'] = BackendModel::getUTCDate();
 
         BackendModel::get('database')->update(
-            'shop_brands', $item, 'id = ?', (int) $item['id']
+            'shop_products', $item, 'id = ?', (int) $item['id']
         );
     }
 
@@ -113,7 +113,7 @@ class Model
         $db = BackendModel::get('database');
         foreach($content as $language => $row)
         {
-            $db->update('shop_brand_content', $row, 'brand_id = ? AND language = ?', array($id, $language));
+            $db->update('shop_product_content', $row, 'brand_id = ? AND language = ?', array($id, $language));
         }
     }
 }
