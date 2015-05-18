@@ -12,5 +12,5 @@ use Backend\Core\Engine\Language;
  */
 class Model
 {
-
+	
 }
