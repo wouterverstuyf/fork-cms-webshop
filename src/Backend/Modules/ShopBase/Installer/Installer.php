@@ -54,7 +54,7 @@ class Installer extends ModuleInstaller
             $this->setSetting('ShopBase', 'ApiCallId', (string) $return->data->id);
         } 
         catch(Exception $e){
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        
         }
     }
 }
