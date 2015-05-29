@@ -17,7 +17,7 @@ class Model
     const QRY_DATAGRID_BROWSE =
         'SELECT i.id, c.name
          FROM shop_product_properties AS i
-         INNER JOIN shop_product_properties_content as c  on i.id = c.property_id
+         INNER JOIN shop_product_property_content as c  on i.id = c.property_id
          WHERE c.language = ?';
 
     /**
@@ -28,7 +28,7 @@ class Model
     public static function delete($id)
     {
         BackendModel::get('database')->delete('shop_product_properties', 'id = ?', (int) $id);
-        BackendModel::get('database')->delete('shop_product_properties_content', 'property_id = ?', (int) $id);
+        BackendModel::get('database')->delete('shop_product_property_content', 'property_id = ?', (int) $id);
     }
 
      public static function deleteValue($id)
@@ -140,7 +140,7 @@ class Model
 
         // data found
         $return['content'] = (array) $db->getRecords(
-            'SELECT i.* FROM shop_product_properties_content AS i
+            'SELECT i.* FROM shop_product_property_content AS i
             WHERE i.property_id = ?',
             array((int) $id), 'language');
 
@@ -186,7 +186,7 @@ class Model
 
     public static function insertContent(array $content)
     {
-        BackendModel::get('database')->insert('shop_product_properties_content', $content);
+        BackendModel::get('database')->insert('shop_product_property_content', $content);
     }
 
     /**
@@ -208,7 +208,7 @@ class Model
         $db = BackendModel::get('database');
         foreach($content as $language => $row)
         {
-            $db->update('shop_product_properties_content', $row, 'property_id = ? AND language = ?', array($id, $language));
+            $db->update('shop_product_property_content', $row, 'property_id = ? AND language = ?', array($id, $language));
         }
     }
 
