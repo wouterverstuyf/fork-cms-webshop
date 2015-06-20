@@ -235,6 +235,8 @@ class Model
     public static function getForDropdown()
     {
         $root = self::getRootNodes();
+
+        if(!is_array($root)) return array();
         $tree = self::getTreeByParent(array_keys($root));
         $return = array();
         foreach($tree as $t){
